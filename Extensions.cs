@@ -199,6 +199,11 @@ namespace MijanTools
             return index >= 0 && index < list.Count;
         }
 
+        public static bool ContainsIndex<T>(this IList<T> list, int index)
+        {
+            return index >= 0 && index < list.Count;
+        }
+
         public static T GetRandomElement<T>(this T[] array)
         {
             if (!array.IsNullOrEmpty())
