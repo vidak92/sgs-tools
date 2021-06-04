@@ -5,6 +5,7 @@ A collection of utility-style scripts for Unity.
 ## Features
 
 - [DebugDraw](DebugDraw.cs) - An immediate-mode API for easily drawing basic primitive shapes. Supports drawing lines, rects & circles. Uses **LineRenderer** components for drawing.
+- [CoroutineUtils](CoroutineUtils.cs) - Coroutine helper methods that make it easy to make delayed calls from any script(e.g. call a function after one frame, X frames or X seconds).
 - [SpriteShadow](SpriteShadow.cs) - Make one **SpriteRenderer** act as a shadow of another **SpriteRenderer**.
 - [FPSCounter](FPSCounter.cs) - An FPS counter for calculating and displaying min, max, and average FPS. Based on Catlike Coding's [Frames Per Second tutorial](https://catlikecoding.com/unity/tutorials/frames-per-second/).
 - Helper methods & components for easily manipulating transforms, colors, strings, sprites, cameras, time scale etc.
@@ -15,5 +16,6 @@ Clone the repo or copy it's contents anywhere inside the 'Assets' folder of your
 
 ## Dependencies
 
-- Tested with Unity 2019 LTS. Might not work well with other versions.
-- [TextMesh Pro](https://docs.unity3d.com/Manual/com.unity.textmeshpro.html)
+- Tested with Unity 2019 LTS and Unity 2020 LTS. Might not work well with other versions.
+- Only tested with Unity's built-in/legacy systems(e.g. renderer or input system).
+- [TextMesh Pro](https://docs.unity3d.com/Manual/com.unity.textmeshpro.html).
