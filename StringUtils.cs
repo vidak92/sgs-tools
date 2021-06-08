@@ -2,9 +2,9 @@
 
 namespace MijanTools
 {
-    public static class Utils
+    public static class StringUtils
     {
-        // Color strings.
+        // Rich text tags.
         public static string GetColorTag(string text, Color color)
         {
             return $"<color={color.ToHex()}>{text}</color>";
