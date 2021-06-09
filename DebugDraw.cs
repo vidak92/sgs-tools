@@ -38,8 +38,9 @@ namespace MijanTools
         }
 
         private static DebugDraw _instance;
-        
+
         public static bool IsEnabled;
+        public static float LineWidth = 0.1f;
 
         private Transform _activeParent;
         private Transform _pooledParent;
@@ -47,7 +48,7 @@ namespace MijanTools
         private int _maxLines;
         private List<LineRenderer> _pooledLines;
         private List<LineRenderer> _activeLines;
-        
+
         private Material _lineMaterial;
         private List<DrawLineData> _linesToDraw;
         private List<DrawCircleData> _circlesToDraw;
@@ -83,8 +84,8 @@ namespace MijanTools
                 line.useWorldSpace = true;
                 line.startColor = color;
                 line.endColor = color;
-                line.startWidth = 0.1f;
-                line.endWidth = 0.1f;
+                line.startWidth = LineWidth;
+                line.endWidth = LineWidth;
                 line.SetPosition(0, p1);
                 line.SetPosition(1, p2);
                 line.sortingOrder = sortOrder;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.ParticleSystem;
 using Random = UnityEngine.Random;
 
 namespace MijanTools
@@ -50,14 +49,14 @@ namespace MijanTools
                 }
                 return Screen.currentResolution;
             }
-            
+
             var indexOfX = s.IndexOf('x');
             var indexOfAt = s.IndexOf('@');
             var indexOfHz = s.IndexOf('H');
             var widthString = s.SubstringFromTo(0, indexOfX - 1);
             var heightString = s.SubstringFromTo(indexOfX + 1, indexOfAt - 1);
             var refreshRateString = s.SubstringFromTo(indexOfAt + 1, indexOfHz - 1);
-            
+
             if (int.TryParse(widthString, out int width) &&
                 int.TryParse(heightString, out int height) &&
                 int.TryParse(refreshRateString, out int refreshRate))
@@ -77,7 +76,7 @@ namespace MijanTools
         // String.
         public static string SubstringFromTo(this string s, int startIndex, int endIndex)
         {
-            if (startIndex <= endIndex && !string.IsNullOrEmpty(s) && 
+            if (startIndex <= endIndex && !string.IsNullOrEmpty(s) &&
                 s.ContainsIndex(startIndex) && s.ContainsIndex(endIndex))
             {
                 return s.Substring(startIndex, endIndex - startIndex + 1);
@@ -143,7 +142,7 @@ namespace MijanTools
             var mainModule = particleSystem.main;
             var color = mainModule.startColor.color;
             var newColor = new Color(color.r, color.g, color.b, alpha);
-            mainModule.startColor = new MinMaxGradient(newColor);
+            mainModule.startColor = new ParticleSystem.MinMaxGradient(newColor);
         }
 
         public static void SetStartColor(this ParticleSystem particleSystem, Color color)
@@ -152,7 +151,7 @@ namespace MijanTools
             mainModule.startColor = color;
         }
 
-        public static void SetStartColor(this ParticleSystem particleSystem, MinMaxGradient gradient)
+        public static void SetStartColor(this ParticleSystem particleSystem, ParticleSystem.MinMaxGradient gradient)
         {
             var mainModule = particleSystem.main;
             mainModule.startColor = gradient;
@@ -163,7 +162,7 @@ namespace MijanTools
             var mainModule = particleSystem.colorOverLifetime;
             var color = mainModule.color.color;
             var newColor = new Color(color.r, color.g, color.b, alpha);
-            mainModule.color = new MinMaxGradient(newColor);
+            mainModule.color = new ParticleSystem.MinMaxGradient(newColor);
         }
 
         public static void SetColorOverLifetime(this ParticleSystem particleSystem, Color color)
@@ -172,7 +171,7 @@ namespace MijanTools
             colorOverLifetimeModule.color = color;
         }
 
-        public static void SetColorOverLifetime(this ParticleSystem particleSystem, MinMaxGradient gradient)
+        public static void SetColorOverLifetime(this ParticleSystem particleSystem, ParticleSystem.MinMaxGradient gradient)
         {
             var colorOverLifetimeModule = particleSystem.colorOverLifetime;
             colorOverLifetimeModule.color = gradient;
@@ -247,6 +246,9 @@ namespace MijanTools
             Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");
             return default;
         }
+
+        // TODO: Add list/array extensions for sum, average, etc. 
+        // Add support for int, float, Vector2, Vector3 or whatever else makes sense.
 
         // Set position.
         public static void SetPositionX(this Transform transform, float x)
@@ -772,7 +774,7 @@ namespace MijanTools
         {
             rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, y);
         }
-        
+
         public static void SetSizeDeltaXY(this RectTransform rectTransform, float x, float y)
         {
             rectTransform.sizeDelta = new Vector2(x, y);
