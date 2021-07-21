@@ -17,5 +17,14 @@ namespace MijanTools
                 return _mainCamera;
             }
         }
+
+        public static Rect GetMainCameraOrthrographicBounds()
+        {
+            var height = MainCamera.orthographicSize * 2f;
+            var width = MainCamera.aspect * height;
+            var position = MainCamera.transform.position;
+            var bounds = new Rect(position.x - width / 2f, position.y - height / 2f, width, height);
+            return bounds;
+        }
     }
 }
