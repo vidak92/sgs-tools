@@ -25,6 +25,11 @@ namespace MijanTools
         }
 
         // Public methods.
+        public static void StopCoroutines()
+        {
+            _instance.StopAllCoroutines();
+        }
+
         public static Coroutine CallAfterOneFrame(Action action)
         {
             Init();
