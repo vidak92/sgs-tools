@@ -27,6 +27,8 @@ namespace MijanTools
         // Public methods.
         public static void StopCoroutines()
         {
+            Init();
+
             _instance.StopAllCoroutines();
         }
 
