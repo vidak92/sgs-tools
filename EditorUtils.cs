@@ -6,6 +6,7 @@ namespace MijanTools
 {
     public static class EditorUtils
     {
+#if UNITY_2019
         public static void DrawEditableList(SerializedProperty list)
         {
             EditorGUILayout.LabelField(list.displayName);
@@ -40,6 +41,7 @@ namespace MijanTools
             }
             EditorGUILayout.Separator();
         }
+#endif
     }
 }
 #endif
