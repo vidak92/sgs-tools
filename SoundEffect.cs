@@ -6,8 +6,8 @@ namespace MijanTools
     [Serializable]
     public class SoundEffect
     {
-        public float MinVolume;
-        public float MaxVolume;
+        public float MinVolume = 0f;
+        public float MaxVolume = 1f;
         public AudioClip[] Clips;
 
         private int _lastPlayedClipIndex;

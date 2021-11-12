@@ -9,10 +9,22 @@ namespace MijanTools
 {
     public static class Extensions
     {
+        // GameObject.
+        public static bool IsInLayer(this GameObject gameObject, string layerName)
+        {
+            var layer = LayerMask.NameToLayer(layerName);
+            return gameObject.layer == layer;
+        }
+
         // Color strings.
         public static string ToHex(this Color color)
         {
             return $"#{ColorUtility.ToHtmlStringRGB(color)}";
+        }
+
+        public static Color MultiplyIgnoringAlpha(this Color color, float multiplier)
+        {
+            return new Color(color.r * multiplier, color.g * multiplier, color.b * multiplier, color.a);
         }
 
         // Int/enum.
