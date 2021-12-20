@@ -4,8 +4,8 @@ namespace MijanTools
 {
     public static class TimeScaleUtils
     {
-        public static float BaseTimeScale { get; private set; }
-        public static float TimeScaleMultiplier { get; private set; }
+        public static float BaseTimeScale { get; private set; } = 1f;
+        public static float TimeScaleMultiplier { get; private set; } = 1f;
 
         public static void AddTimeScaleMultiplier(float timeScaleMultiplierIncrement)
         {
