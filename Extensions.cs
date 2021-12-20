@@ -667,6 +667,11 @@ namespace MijanTools
             transform.localScale = new Vector3(x, y, z);
         }
 
+        public static void SetLocalScale(this Transform transform, float scale)
+        {
+            transform.localScale = new Vector3(scale, scale, scale);
+        }
+
         // Add local scale.
         public static void AddLocalScaleX(this Transform transform, float x)
         {
