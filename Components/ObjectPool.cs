@@ -12,15 +12,16 @@ namespace MijanTools.Components
     {
         private T _prefab;
         private int _initialCapacity;
-        private Transform _parent;
+        private List<T> _pool;
 
-        private List<T> _pool = new List<T>();
+        public Transform Parent { get; private set; }
 
         public ObjectPool(T prefab, int initialCapacity, Transform parent)
         {
             _prefab = prefab;
             _initialCapacity = initialCapacity;
-            _parent = parent;
+            _pool = new List<T>();
+            Parent = parent;
             for (int i = 0; i < _initialCapacity; i++)
             {
                 AddNewObject();
@@ -30,7 +31,7 @@ namespace MijanTools.Components
         public void Return(T poolable)
         {
             poolable.gameObject.SetActive(false);
-            poolable.transform.parent = _parent;
+            poolable.transform.parent = Parent;
             _pool.Add(poolable);
         }
 
@@ -58,7 +59,7 @@ namespace MijanTools.Components
 
         private void AddNewObject()
         {
-            var poolable = Object.Instantiate(_prefab, _parent);
+            var poolable = Object.Instantiate(_prefab, Parent);
             if (poolable != null)
             {
                 poolable.gameObject.SetActive(false);
