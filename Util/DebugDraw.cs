@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Util
 {
     public class DebugDraw : MonoBehaviour
     {

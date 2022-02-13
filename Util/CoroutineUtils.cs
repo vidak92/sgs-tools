@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Util
 {
     public class CoroutineUtils : MonoBehaviour
     {
         private static CoroutineUtils _instance;
 
-        // Initialization.
+        // Initialization
         private static void Init()
         {
             if (_instance == null)
@@ -24,7 +24,7 @@ namespace MijanTools
             // TODO: Setup internal state here.
         }
 
-        // Public methods.
+        // Public Methods
         public static void StopCoroutines()
         {
             Init();
@@ -60,7 +60,7 @@ namespace MijanTools
             return _instance.StartCoroutine(_instance.CallAfterXSecondsCoroutine(seconds, ignoreTimeScale: true, action));
         }
 
-        // Private methods.
+        // Private Methods
         private IEnumerator CallAfterXFramesCoroutine(int frameCount, Action action)
         {
             for (int i = 0; i < frameCount; i++)

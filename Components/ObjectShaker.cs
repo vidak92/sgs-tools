@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using MijanTools.Common;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace MijanTools
+namespace MijanTools.Components
 {
 #if UNITY_EDITOR
     [CustomEditor(typeof(ObjectShaker))]

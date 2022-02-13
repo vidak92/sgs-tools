@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MijanTools.Common;
+using System;
 using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Components
 {
     [Serializable]
     public class SoundEffect

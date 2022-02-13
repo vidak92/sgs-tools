@@ -1,6 +1,7 @@
+using MijanTools.Common;
 using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Components
 {
     // TODO: Add looping options.
     public class SpriteAnimation : MonoBehaviour

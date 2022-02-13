@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using MijanTools.Common;
+using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Util
 {
     public static class StringUtils
     {

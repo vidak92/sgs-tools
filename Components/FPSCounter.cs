@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Components
 {
     // TODO: Extend for higher frame-rates(100+ FPS).
     public class FPSCounter : MonoBehaviour

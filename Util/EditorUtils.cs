@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace MijanTools
+namespace MijanTools.Util
 {
     public static class EditorUtils
     {

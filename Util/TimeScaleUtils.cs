@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Util
 {
     public static class TimeScaleUtils
     {

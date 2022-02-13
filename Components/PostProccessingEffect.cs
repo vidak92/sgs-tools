@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MijanTools
+namespace MijanTools.Components
 {
     public class PostProccessingEffect : MonoBehaviour
     {
