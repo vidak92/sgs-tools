@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,6 +23,20 @@ namespace MijanTools.Util
         public static void OpenApplicationDataPath()
         {
             EditorUtility.RevealInFinder(Application.persistentDataPath);
+        }
+
+        [MenuItem("Mijan Tools/Take Screenshot")]
+        public static void TakeScreenshot()
+        {
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+            var directoryPath = $"{Application.persistentDataPath}/screenshots";
+            if (!System.IO.Directory.Exists(directoryPath))
+            {
+                System.IO.Directory.CreateDirectory(directoryPath);
+            }
+            var filePath = $"{directoryPath}/{timestamp}.png";
+            ScreenCapture.CaptureScreenshot(filePath);
+            Debug.Log($"Screenshot saved at: {filePath}");
         }
     }
 }
