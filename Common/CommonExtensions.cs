@@ -34,7 +34,7 @@ namespace MijanTools.Common
             return gameObject.layer == layer;
         }
 
-        // Color Strings
+        // Color
         public static string ToHex(this Color color)
         {
             return $"#{ColorUtility.ToHtmlStringRGB(color)}";
@@ -43,6 +43,11 @@ namespace MijanTools.Common
         public static Color MultiplyIgnoringAlpha(this Color color, float multiplier)
         {
             return new Color(color.r * multiplier, color.g * multiplier, color.b * multiplier, color.a);
+        }
+
+        public static Color WithAlpha(this Color color, float alpha)
+        {
+            return new Color(color.r, color.g, color.b, alpha);
         }
 
         // Int/enum
