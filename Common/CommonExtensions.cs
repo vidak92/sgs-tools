@@ -238,6 +238,12 @@ namespace MijanTools.Common
             return index >= 0 && index < array.Length;
         }
 
+        public static bool ContainsIndex<T>(this T[,] array, int index1, int index2)
+        {
+            return index1 >= 0 && index1 < array.GetLength(0)
+                && index2 >= 0 && index2 < array.GetLength(1);
+        }
+
         public static bool ContainsIndex<T>(this List<T> list, int index)
         {
             return index >= 0 && index < list.Count;
