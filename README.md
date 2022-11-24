@@ -21,8 +21,8 @@ Clone the repo or copy it's contents anywhere inside the 'Assets' folder of your
 
 ## Dependencies
 
-- Tested with Unity 2019 LTS and Unity 2020 LTS. Might not work well with other versions.
 - [TextMesh Pro](https://docs.unity3d.com/Manual/com.unity.textmeshpro.html).
 
 ## Notes
-- Only tested with Unity's built-in/legacy systems(e.g. renderer or input system).
+
+- Should work well with Unity 2020 LTS and Unity 2021 LTS versions.
