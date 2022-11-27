@@ -37,12 +37,16 @@ namespace MijanTools.Util
             }
         }
 
+        public static class Settings
+        {
+            public static float LineWidth = 0.1f;
+            public static string SortLayerName = "Default";
+            public static int StartingSortOrder = 0;
+        }
+
         private static DebugDraw _instance;
 
         public static bool IsEnabled = false;
-        public static float LineWidth = 0.1f;
-        public static string SortLayerName = "Default";
-        public static int StartingSortOrder = 0;
 
         private Transform _activeParent;
         private Transform _pooledParent;
@@ -79,18 +83,18 @@ namespace MijanTools.Util
                 var color = drawLineData.Color;
                 var p1 = drawLineData.Point1;
                 var p2 = drawLineData.Point2;
-                var sortOrder = StartingSortOrder + drawLineData.SortOrder;
+                var sortOrder = Settings.StartingSortOrder + drawLineData.SortOrder;
 
                 var line = GetLineObjectFromPool();
                 line.positionCount = 2;
                 line.useWorldSpace = true;
                 line.startColor = color;
                 line.endColor = color;
-                line.startWidth = LineWidth;
-                line.endWidth = LineWidth;
+                line.startWidth = Settings.LineWidth;
+                line.endWidth = Settings.LineWidth;
                 line.SetPosition(0, p1);
                 line.SetPosition(1, p2);
-                line.sortingLayerName = SortLayerName;
+                line.sortingLayerName = Settings.SortLayerName;
                 line.sortingOrder = sortOrder;
                 line.transform.parent = _activeParent;
                 _activeLines.Add(line);
@@ -103,7 +107,7 @@ namespace MijanTools.Util
                 var center = drawCircleData.Center;
                 var radius = drawCircleData.Radius;
                 var color = drawCircleData.Color;
-                var sortOrder = StartingSortOrder + drawCircleData.SortOrder;
+                var sortOrder = Settings.StartingSortOrder + drawCircleData.SortOrder;
 
                 var n = 50;
                 var line = GetLineObjectFromPool();
@@ -120,7 +124,7 @@ namespace MijanTools.Util
                     line.SetPosition(i, new Vector3(x, y, 0f) + center);
                 }
 
-                line.sortingLayerName = SortLayerName;
+                line.sortingLayerName = Settings.SortLayerName;
                 line.sortingOrder = sortOrder;
                 line.transform.parent = _activeParent;
                 _activeLines.Add(line);
