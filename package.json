@@ -1,0 +1,9 @@
+{
+    "name": "com.vidak-mijanovic.mijan-tools",
+    "version": "0.1.0",
+    "displayName": "Mijan Tools",
+    "dependencies":
+    {
+        "com.unity.textmeshpro": "3.0.6"
+    }
+}
