@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MijanTools.Common
 {
-    public static class TransformExtensions
+    public static class TransformExt
     {
         // Set Position
         public static void SetPositionX(this Transform transform, float x)
