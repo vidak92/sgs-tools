@@ -1,4 +1,8 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using MijanTools.Util;
+using UnityEditor;
+#endif
 
 namespace MijanTools.Data
 {
@@ -13,4 +17,17 @@ namespace MijanTools.Data
             return Random.Range(MinValue, MaxValue);
         }
     }
+    
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(MinMaxFloat))]
+    public class MinMaxFloatDrawer : FieldPairDrawer
+    {
+        protected override string Field1Name { get; } = nameof(MinMaxFloat.MinValue);
+        protected override string Field2Name { get; } = nameof(MinMaxFloat.MaxValue);
+        
+        protected override float FieldLabelWidth { get; } = 45f;
+        protected override string Field1Label { get; } = "Min";
+        protected override string Field2Label { get; } = "Max";
+    }
+#endif
 }
