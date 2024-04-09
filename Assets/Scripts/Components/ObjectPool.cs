@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace MijanTools.Components
 {
-    public interface IPoolable<T> where T : MonoBehaviour, IPoolable<T>
-    {
-        public ObjectPool<T> Pool { get; set; }
-    }
+    // public interface IPoolable<T> where T : MonoBehaviour, IPoolable<T>
+    // {
+    //     public ObjectPool<T> Pool { get; set; }
+    // }
 
-    public class ObjectPool<T> where T : MonoBehaviour, IPoolable<T>
+    public class ObjectPool<T> where T : MonoBehaviour//, IPoolable<T>
     {
         private T _prefab;
         private int _initialCapacity;
@@ -63,7 +63,7 @@ namespace MijanTools.Components
             if (poolable != null)
             {
                 poolable.gameObject.SetActive(false);
-                poolable.Pool = this;
+                // poolable.Pool = this;
                 _pool.Add(poolable);
             }
             else

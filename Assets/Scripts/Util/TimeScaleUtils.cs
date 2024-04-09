@@ -13,6 +13,13 @@ namespace MijanTools.Util
             Debug.Log($"Time scale multiplier: {TimeScaleMultiplier}");
             UpdateTimeScale();
         }
+        
+        public static void SetTimeScaleMultiplier(float timeScaleMultiplier)
+        {
+            TimeScaleMultiplier = Mathf.Clamp01(timeScaleMultiplier);
+            Debug.Log($"Time scale multiplier: {TimeScaleMultiplier}");
+            UpdateTimeScale();
+        }
 
         public static void SetBaseTimeScale(float timeScale)
         {

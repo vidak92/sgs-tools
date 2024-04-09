@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace MijanTools.Common
 {
-    public static class Extensions
+    public static class CommonExt
     {
         // Int
         public static bool IsEven(this int value)
