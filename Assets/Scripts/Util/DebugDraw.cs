@@ -180,6 +180,21 @@ namespace MijanTools.Util
             _instance._circlesToDraw.Add(new DrawCircleData(center, radius, color, _instance._totalDrawn));
             _instance._totalDrawn++;
         }
+        
+        public static void DrawRect(Vector3 center, Vector2 size, Color color)
+        {
+            Init();
+
+            var bottomLeft = center + new Vector3(-size.x, -size.y, 0f);
+            var bottomRight = center + new Vector3(size.x, -size.y, 0f);
+            var topRight = center + new Vector3(size.x, size.y, 0f);
+            var topLeft = center + new Vector3(-size.x, size.y, 0f);
+
+            DrawLine(bottomLeft, bottomRight, color);
+            DrawLine(bottomRight, topRight, color);
+            DrawLine(topRight, topLeft, color);
+            DrawLine(topLeft, bottomLeft, color);
+        }
 
         private LineRenderer GetLineObjectFromPool()
         {

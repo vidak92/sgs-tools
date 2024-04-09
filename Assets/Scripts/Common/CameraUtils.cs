@@ -26,5 +26,12 @@ namespace MijanTools.Common
             var bounds = new Rect(position.x - width / 2f, position.y - height / 2f, width, height);
             return bounds;
         }
+
+        public static Vector3 GetMouseWorldPosition2D()
+        {
+            var mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0f;
+            return mousePosition;
+        }
     }
 }
