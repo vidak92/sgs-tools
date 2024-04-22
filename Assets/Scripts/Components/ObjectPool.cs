@@ -8,13 +8,20 @@ namespace MijanTools.Components
     //     public ObjectPool<T> Pool { get; set; }
     // }
 
-    public class ObjectPool<T> where T : MonoBehaviour//, IPoolable<T>
+    public class ObjectPool<T> where T : Component//, IPoolable<T>
     {
         private T _prefab;
         private int _initialCapacity;
         private List<T> _pool;
 
         public Transform Parent { get; private set; }
+
+        public static ObjectPool<T> CreateWithGameObject(T prefab, int initialCapacity, string gameObjectName)
+        {
+            var gameObject = new GameObject(gameObjectName);
+            var pool = new ObjectPool<T>(prefab, initialCapacity, gameObject.transform);
+            return pool;
+        }
 
         public ObjectPool(T prefab, int initialCapacity, Transform parent)
         {
