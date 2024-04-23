@@ -42,6 +42,7 @@ namespace MijanTools.Util
             public static float LineWidth = 0.1f;
             public static string SortLayerName = "Default";
             public static int StartingSortOrder = 0;
+            public static Color DefaultColor = Color.white;
         }
 
         private static DebugDraw _instance;
@@ -171,6 +172,11 @@ namespace MijanTools.Util
 
             _instance._linesToDraw.Add(new DrawLineData(p1, p2, color, _instance._totalDrawn));
             _instance._totalDrawn++;
+        }
+
+        public static void DrawCircle(Vector3 center, float radius)
+        {
+            DrawCircle(center, radius, Settings.DefaultColor);
         }
 
         public static void DrawCircle(Vector3 center, float radius, Color color)
