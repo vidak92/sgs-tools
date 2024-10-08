@@ -8,11 +8,13 @@ namespace MijanTools.Components
     //     public ObjectPool<T> Pool { get; set; }
     // }
 
+    // [System.Serializable]
     public class ObjectPool<T> where T : Component//, IPoolable<T>
     {
         private T _prefab;
         private int _initialCapacity;
         private List<T> _pool;
+        private int _count;
 
         public Transform Parent { get; private set; }
 
@@ -25,6 +27,7 @@ namespace MijanTools.Components
 
         public ObjectPool(T prefab, int initialCapacity, Transform parent)
         {
+            _count = 0;
             _prefab = prefab;
             _initialCapacity = initialCapacity;
             _pool = new List<T>();
@@ -37,6 +40,12 @@ namespace MijanTools.Components
 
         public void Return(T poolable)
         {
+            if (_pool.Contains(poolable))
+            {
+                Debug.LogWarning($"Object pool already contains object {poolable}, skipping return.");
+                return;
+            }
+            
             poolable.gameObject.SetActive(false);
             poolable.transform.parent = Parent;
             _pool.Add(poolable);
@@ -69,9 +78,11 @@ namespace MijanTools.Components
             var poolable = Object.Instantiate(_prefab, Parent);
             if (poolable != null)
             {
+                poolable.gameObject.name = $"{poolable.gameObject.name}_{_count}";
                 poolable.gameObject.SetActive(false);
                 // poolable.Pool = this;
                 _pool.Add(poolable);
+                _count++;
             }
             else
             {
