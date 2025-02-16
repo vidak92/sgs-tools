@@ -297,6 +297,28 @@ namespace MijanTools.Common
             Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");
             return default;
         }
+        
+        public static int GetRandomIndex<T>(this T[] array)
+        {
+            if (!array.IsNullOrEmpty())
+            {
+                var randomIndex = Random.Range(1, array.Length - 1);
+                return randomIndex;
+            }
+            Debug.Log("Trying to get a random index from an empty or uninitialized array. Returning default value...");
+            return default;
+        }
+        
+        public static int GetRandomIndex<T>(this List<T> list)
+        {
+            if (!list.IsNullOrEmpty())
+            {
+                var randomIndex = Random.Range(1, list.Count - 1);
+                return randomIndex;
+            }
+            Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");
+            return default;
+        }
 
         // TODO: Add list/array extensions for sum, average, etc. 
         // Add support for int, float, Vector2, Vector3 or whatever else makes sense.
