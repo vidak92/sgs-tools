@@ -9,12 +9,24 @@ namespace MijanTools.Data
     [System.Serializable]
     public class MinMaxFloat
     {
-        [field: SerializeField] public float MinValue { get; private set; }
-        [field: SerializeField] public float MaxValue { get; private set; }
+        // TODO convert to regular field
+        [field: SerializeField] public float MinValue { get; set; }
+        [field: SerializeField] public float MaxValue { get; set; }
 
         public float GetRandomValue()
         {
             return Random.Range(MinValue, MaxValue);
+        }
+
+        public float GetValueAt(float t)
+        {
+            // TODO clamp t?
+            return Mathf.Lerp(MinValue, MaxValue, t);
+        }
+
+        public float ClampValue(float value)
+        {
+            return Mathf.Clamp(value, MinValue, MaxValue);
         }
     }
     

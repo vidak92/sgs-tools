@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace MijanTools.Common
-{
+{ 
     public static class CommonExt
     {
         // Int
@@ -322,5 +322,16 @@ namespace MijanTools.Common
 
         // TODO: Add list/array extensions for sum, average, etc. 
         // Add support for int, float, Vector2, Vector3 or whatever else makes sense.
+        
+        public static void Shuffle<T>(this List<T> list)
+        {
+            int n = list.Count;
+            for (int i = n - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                // int j = random.Next(i + 1);
+                (list[i], list[j]) = (list[j], list[i]); // Swap elements
+            }
+        }
     }
 }

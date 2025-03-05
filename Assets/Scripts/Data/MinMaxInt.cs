@@ -9,6 +9,7 @@ namespace MijanTools.Data
     [System.Serializable]
     public class MinMaxInt
     {
+        // TODO convert to regular field
         [field: SerializeField] public int MinValue { get; private set; }
         [field: SerializeField] public int MaxValue { get; private set; }
 
