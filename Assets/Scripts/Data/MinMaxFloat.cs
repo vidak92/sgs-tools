@@ -13,6 +13,18 @@ namespace MijanTools.Data
         [field: SerializeField] public float MinValue { get; set; }
         [field: SerializeField] public float MaxValue { get; set; }
 
+        public MinMaxFloat()
+        {
+            MinValue = 0f;
+            MaxValue = 0f;
+        }
+        
+        public MinMaxFloat(float minValue, float maxValue)
+        {
+            MinValue = minValue;
+            MaxValue = maxValue;
+        }
+
         public float GetRandomValue()
         {
             return Random.Range(MinValue, MaxValue);
