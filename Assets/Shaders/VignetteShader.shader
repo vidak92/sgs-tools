@@ -3,13 +3,18 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _VignettePower ("VignettePower", Range(0.0, 5.0)) = 0.5
-        // TODO: Add vignette color.
+        _DistanceMultiplier ("Distance Multiplier", Range(0, 5)) = 1.5
+        _DistancePower ("Distance Power", Range(0, 5)) = 3
+        _VignettePower ("VignettePower", Range(0.0, 10)) = 0.5
+        _Color ("Color", Color) = (0, 0, 0, 1)
+        _IsAdditive ("Is Additive", Range(0, 1)) = 1
     }
     SubShader
     {
         // No culling or depth
         Cull Off ZWrite Off ZTest Always
+        
+//        Blend One One
 
         Pass
         {
@@ -31,6 +36,13 @@
                 float4 vertex : SV_POSITION;
             };
 
+            sampler2D _MainTex;
+            float _DistanceMultiplier;
+            float _DistancePower;
+            float _VignettePower;
+            float4 _Color;
+            float _IsAdditive;
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -39,16 +51,23 @@
                 return o;
             }
 
-            sampler2D _MainTex;
-            float _VignettePower;
-
             fixed4 frag (v2f i) : SV_Target
             {
                 float4 renderTex = tex2D(_MainTex, i.uv);
-                float2 dist = (i.uv - 0.5f) * 1.5f;
-                dist = dist * dist * dist;
-                dist.x = 1 - dot(dist, dist)  * _VignettePower;
-                renderTex *= dist.x;
+                float2 dist = (i.uv - 0.5) * _DistanceMultiplier;
+                dist = pow(dist, 3.0);
+                // dist = pow(dist, _DistancePower); // TODO why doesn't this work?
+                dist.x = dot(dist, dist) * _VignettePower;
+
+                float isAdditive = step(0.5, _IsAdditive);
+                if (isAdditive)
+                {
+                    renderTex += dist.x * _Color;
+                }
+                else
+                {
+                    renderTex *= 1 - dist.x;
+                }
                 return renderTex;
             }
             ENDCG

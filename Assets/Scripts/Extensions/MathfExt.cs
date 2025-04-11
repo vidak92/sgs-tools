@@ -60,5 +60,10 @@ namespace MijanTools.Extensions
             }
             return false;
         }
+
+        public static float DirectionXYToAngle(Vector3 direction)
+        {
+            return Mathf.Atan2(direction.y, direction.x);
+        }
     }
 }
