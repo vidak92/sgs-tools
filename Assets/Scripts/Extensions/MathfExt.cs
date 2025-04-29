@@ -4,6 +4,8 @@ namespace MijanTools.Extensions
 {
     public static class MathfExt
     {
+        public const float TAU = 6.283185307179586f;
+        
         public static readonly float EquilateralTriangleHeight = Mathf.Sqrt(3f) / 2f;
         
         public static bool AreLinesIntersecting(Vector2 l1p1, Vector2 l1p2, Vector2 l2p1, Vector2 l2p2)
@@ -60,10 +62,25 @@ namespace MijanTools.Extensions
             }
             return false;
         }
-
-        public static float DirectionXYToAngle(Vector3 direction)
+        
+        /// <returns>angle in radians</returns>
+        public static float VectorXYToAngle(Vector3 direction)
         {
             return Mathf.Atan2(direction.y, direction.x);
+        }
+        
+        /// <returns>angle in radians</returns>
+        public static float VectorXYToAngle(float x, float y)
+        {
+            return Mathf.Atan2(y, x);
+        }
+
+        /// <param name="angle">in radians</param>
+        public static Vector3 AngleToVector(float angle, float radius)
+        {
+            float x = Mathf.Cos(angle) * radius;
+            float y = Mathf.Sin(angle) * radius;
+            return new Vector3(x, y, 0f);
         }
     }
 }

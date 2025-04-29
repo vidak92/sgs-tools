@@ -13,8 +13,9 @@ namespace MijanTools.Components
     {
         private T _prefab;
         private int _initialCapacity;
-        private List<T> _pool;
         private int _count;
+        private List<T> _pool;
+        private List<T> _activeObjects;
 
         public Transform Parent { get; private set; }
 
@@ -27,10 +28,11 @@ namespace MijanTools.Components
 
         public ObjectPool(T prefab, int initialCapacity, Transform parent)
         {
-            _count = 0;
             _prefab = prefab;
             _initialCapacity = initialCapacity;
+            _count = 0;
             _pool = new List<T>();
+            _activeObjects = new List<T>();
             Parent = parent;
             for (int i = 0; i < _initialCapacity; i++)
             {
@@ -38,17 +40,18 @@ namespace MijanTools.Components
             }
         }
 
-        public void Return(T poolable)
+        public void Return(T poolObject)
         {
-            if (_pool.Contains(poolable))
+            if (_pool.Contains(poolObject))
             {
-                Debug.LogWarning($"Object pool already contains object {poolable}, skipping return.");
+                Debug.LogWarning($"Object pool already contains object {poolObject}, skipping return.");
                 return;
             }
             
-            poolable.gameObject.SetActive(false);
-            poolable.transform.parent = Parent;
-            _pool.Add(poolable);
+            poolObject.gameObject.SetActive(false);
+            poolObject.transform.parent = Parent;
+            _pool.Add(poolObject);
+            _activeObjects.Remove(poolObject);
         }
 
         public T Get()
@@ -60,11 +63,12 @@ namespace MijanTools.Components
 
             if (_pool.Count > 0)
             {
-                var poolable = _pool[0];
+                var poolObject = _pool[0];
                 _pool.RemoveAt(0);
-                poolable.gameObject.SetActive(true);
-                poolable.gameObject.transform.parent = null;
-                return poolable;
+                _activeObjects.Add(poolObject);
+                poolObject.gameObject.SetActive(true);
+                poolObject.gameObject.transform.parent = null;
+                return poolObject;
             }
             else
             {
@@ -75,13 +79,13 @@ namespace MijanTools.Components
 
         private void AddNewObject()
         {
-            var poolable = Object.Instantiate(_prefab, Parent);
-            if (poolable != null)
+            var poolObject = Object.Instantiate(_prefab, Parent);
+            if (poolObject != null)
             {
-                poolable.gameObject.name = $"{poolable.gameObject.name}_{_count}";
-                poolable.gameObject.SetActive(false);
+                poolObject.gameObject.name = $"{poolObject.gameObject.name}_{_count}";
+                poolObject.gameObject.SetActive(false);
                 // poolable.Pool = this;
-                _pool.Add(poolable);
+                _pool.Add(poolObject);
                 _count++;
             }
             else

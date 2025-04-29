@@ -211,6 +211,32 @@ namespace MijanTools.Common
             var colorOverLifetimeModule = particleSystem.colorOverLifetime;
             colorOverLifetimeModule.color = gradient;
         }
+        
+        // LineRenderer
+        public static void SetColor(this LineRenderer lineRenderer, Color color)
+        {
+            lineRenderer.startColor = color;
+            lineRenderer.endColor = color;
+        }
+        
+        public static void SetWidth(this LineRenderer lineRenderer, float width)
+        {
+            lineRenderer.startWidth = width;
+            lineRenderer.endWidth = width;
+        }
+        
+        // TrailRenderer
+        public static void SetColor(this TrailRenderer trailRenderer, Color color)
+        {
+            trailRenderer.startColor = color;
+            trailRenderer.endColor = color;
+        }
+        
+        public static void SetWidth(this TrailRenderer trailRenderer, float width)
+        {
+            trailRenderer.startWidth = width;
+            trailRenderer.endWidth = width;
+        }
 
         // Dictionary
         public static bool HasKey<T, U>(this Dictionary<T, U> dictionary, T key)

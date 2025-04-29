@@ -27,8 +27,8 @@ namespace MijanTools.Util
             var field1Rect = new Rect(position.x + labelWidth, position.y, fieldWidth, position.height);
             var field2Rect = new Rect(position.x + labelWidth + fieldWidth, position.y, fieldWidth, position.height);
 
-            var minFieldProperty = property.FindPropertyRelative(Field1Name.ToBackingFieldName());
-            var maxFieldProperty = property.FindPropertyRelative(Field2Name.ToBackingFieldName());
+            var minFieldProperty = property.FindPropertyRelative(Field1Name/*.ToBackingFieldName()*/);
+            var maxFieldProperty = property.FindPropertyRelative(Field2Name/*.ToBackingFieldName()*/);
 
             EditorGUI.LabelField(labelRect, label);
             
