@@ -4,7 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _DistanceMultiplier ("Distance Multiplier", Range(0, 5)) = 1.5
-        _DistancePower ("Distance Power", Range(0, 5)) = 3
+        _DistancePower ("Distance Power", Range(1, 5)) = 3
         _VignettePower ("VignettePower", Range(0.0, 10)) = 0.5
         _Color ("Color", Color) = (0, 0, 0, 1)
         _IsAdditive ("Is Additive", Range(0, 1)) = 1
@@ -55,8 +55,10 @@
             {
                 float4 renderTex = tex2D(_MainTex, i.uv);
                 float2 dist = (i.uv - 0.5) * _DistanceMultiplier;
-                dist = pow(dist, 3.0);
-                // dist = pow(dist, _DistancePower); // TODO why doesn't this work?
+                for (int j = 1; j <= _DistancePower; j++)
+                {
+                    dist *= dist;
+                }
                 dist.x = dot(dist, dist) * _VignettePower;
 
                 float isAdditive = step(0.5, _IsAdditive);
