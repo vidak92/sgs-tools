@@ -27,10 +27,19 @@ namespace MijanTools.Common
             return bounds;
         }
 
-        public static Vector3 GetMouseWorldPosition2D()
+        /// <param name="camera">If null, Camera.main is used.</param>
+        public static Vector3 GetMouseWorldPosition2D(Camera camera = null)
         {
-            var mousePosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            // fallback to main camera
+            if (camera == null)
+            {
+                camera = MainCamera;
+            }
+
+            // convert to world space
+            var mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f;
+            
             return mousePosition;
         }
     }

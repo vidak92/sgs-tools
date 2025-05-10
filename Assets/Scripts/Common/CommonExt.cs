@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -358,6 +359,41 @@ namespace MijanTools.Common
                 // int j = random.Next(i + 1);
                 (list[i], list[j]) = (list[j], list[i]); // Swap elements
             }
+        }
+        
+        // Weighted lists
+        // TODO does this need to be an extension method?
+        public static T GetRandomWeightedElement<T>(this List<(float Weight, T Item)> list)
+        {
+            var totalWeight = 0f;
+            foreach (var item in list)
+            {
+                if (item.Weight <= 0f)
+                {
+                    continue;
+                }
+                
+                totalWeight += item.Weight;
+            }
+
+            var random = Random.Range(0f, totalWeight);
+            var currentWeight = 0f;
+            foreach (var item in list)
+            {
+                if (item.Weight <= 0f)
+                {
+                    continue;
+                }
+                
+                currentWeight += item.Weight;
+                if (random < currentWeight)
+                {
+                    return item.Item;
+                }
+            }
+
+            Assert.IsTrue(true, $"Failed to get random item from weighted list.");
+            return default(T);
         }
     }
 }

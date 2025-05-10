@@ -93,5 +93,13 @@ namespace MijanTools.Components
                 Debug.LogError($"{nameof(ObjectPool<T>)}: Cannot instantiate prefab.");
             }
         }
+
+        public void ReturnAllActiveObjects()
+        {
+            for (int i = _activeObjects.Count - 1; i >= 0; i--)
+            {
+                Return(_activeObjects[i]);   
+            }
+        }
     }
 }
