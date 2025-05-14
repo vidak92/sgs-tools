@@ -16,6 +16,18 @@ namespace MijanTools.Data
         {
             return Random.Range(Min, Max);
         }
+        
+        public float GetValueAt(float t)
+        {
+            var value = Mathf.Lerp(Min, Max, t);
+            value = GetClampedValue(value);
+            return value;
+        }
+
+        public float GetClampedValue(float value)
+        {
+            return Mathf.Clamp(value, Min, Max);
+        }
     }
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(MinMaxInt))]

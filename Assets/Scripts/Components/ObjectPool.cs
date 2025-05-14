@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MijanTools.Common;
 using UnityEngine;
 
 namespace MijanTools.Components
@@ -18,6 +19,7 @@ namespace MijanTools.Components
         private List<T> _activeObjects;
 
         public Transform Parent { get; private set; }
+        public int ActiveObjectCount => _activeObjects.Count;
 
         public static ObjectPool<T> CreateWithGameObject(T prefab, int initialCapacity, string gameObjectName)
         {
@@ -98,8 +100,13 @@ namespace MijanTools.Components
         {
             for (int i = _activeObjects.Count - 1; i >= 0; i--)
             {
-                Return(_activeObjects[i]);   
+                Return(_activeObjects[i]);
             }
+        }
+        
+        public T GetActiveObject(int index)
+        {
+            return _activeObjects.ContainsIndex(index) ? _activeObjects[index] : null;
         }
     }
 }

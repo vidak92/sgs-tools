@@ -31,8 +31,9 @@ namespace MijanTools.Data
 
         public float GetValueAt(float t)
         {
-            // TODO clamp t?
-            return Mathf.Lerp(Min, Max, t);
+            var value = Mathf.Lerp(Min, Max, t);
+            value = GetClampedValue(value);
+            return value;
         }
 
         public float GetClampedValue(float value)
