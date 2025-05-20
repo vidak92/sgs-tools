@@ -28,6 +28,7 @@ namespace MijanTools.Util
         [MenuItem("Mijan Tools/Take Screenshot")]
         public static void TakeScreenshot()
         {
+            // TODO extract method to EditorUtils
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
             var directoryPath = $"{Application.persistentDataPath}/screenshots";
             if (!System.IO.Directory.Exists(directoryPath))

@@ -363,7 +363,7 @@ namespace MijanTools.Common
         
         // Weighted lists
         // TODO does this need to be an extension method?
-        public static T GetRandomWeightedElement<T>(this List<(float Weight, T Item)> list)
+        public static (int Index, T Item) GetRandomWeightedElement<T>(this List<(float Weight, T Item)> list)
         {
             var totalWeight = 0f;
             foreach (var item in list)
@@ -378,8 +378,9 @@ namespace MijanTools.Common
 
             var random = Random.Range(0f, totalWeight);
             var currentWeight = 0f;
-            foreach (var item in list)
+            for (int i = 0; i < list.Count; i++)
             {
+                var item = list[i];
                 if (item.Weight <= 0f)
                 {
                     continue;
@@ -388,12 +389,12 @@ namespace MijanTools.Common
                 currentWeight += item.Weight;
                 if (random < currentWeight)
                 {
-                    return item.Item;
+                    return (i, item.Item);
                 }
             }
 
-            Assert.IsTrue(true, $"Failed to get random item from weighted list.");
-            return default(T);
+            Assert.IsTrue(true, "Failed to get random item from weighted list.");
+            return (-1, default);
         }
     }
 }
