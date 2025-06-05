@@ -307,7 +307,7 @@ namespace MijanTools.Common
         {
             if (!array.IsNullOrEmpty())
             {
-                var randomIndexOffset = Random.Range(1, array.Length - 1);
+                var randomIndexOffset = Random.Range(0, array.Length - 1);
                 return (indexToExclude + randomIndexOffset) % array.Length;
             }
             Debug.Log("Trying to get a random index from an empty or uninitialized array. Returning default value...");
@@ -318,7 +318,7 @@ namespace MijanTools.Common
         {
             if (!list.IsNullOrEmpty())
             {
-                var randomIndexOffset = Random.Range(1, list.Count - 1);
+                var randomIndexOffset = Random.Range(0, list.Count - 1);
                 return (indexToExclude + randomIndexOffset) % list.Count;
             }
             Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");
@@ -329,7 +329,7 @@ namespace MijanTools.Common
         {
             if (!array.IsNullOrEmpty())
             {
-                var randomIndex = Random.Range(1, array.Length - 1);
+                var randomIndex = Random.Range(0, array.Length - 1);
                 return randomIndex;
             }
             Debug.Log("Trying to get a random index from an empty or uninitialized array. Returning default value...");
@@ -340,7 +340,7 @@ namespace MijanTools.Common
         {
             if (!list.IsNullOrEmpty())
             {
-                var randomIndex = Random.Range(1, list.Count - 1);
+                var randomIndex = Random.Range(0, list.Count - 1);
                 return randomIndex;
             }
             Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");

@@ -4,13 +4,7 @@ using UnityEngine;
 
 namespace MijanTools.Components
 {
-    // public interface IPoolable<T> where T : MonoBehaviour, IPoolable<T>
-    // {
-    //     public ObjectPool<T> Pool { get; set; }
-    // }
-
-    // [System.Serializable]
-    public class ObjectPool<T> where T : Component//, IPoolable<T>
+    public class ObjectPool<T> where T : Component
     {
         private T _prefab;
         private int _initialCapacity;
@@ -51,7 +45,7 @@ namespace MijanTools.Components
             }
             
             poolObject.gameObject.SetActive(false);
-            poolObject.transform.parent = Parent;
+            poolObject.transform.SetParent(Parent, false);
             _pool.Add(poolObject);
             _activeObjects.Remove(poolObject);
         }
@@ -69,7 +63,7 @@ namespace MijanTools.Components
                 _pool.RemoveAt(0);
                 _activeObjects.Add(poolObject);
                 poolObject.gameObject.SetActive(true);
-                poolObject.gameObject.transform.parent = null;
+                poolObject.gameObject.transform.SetParent(null, false);
                 return poolObject;
             }
             else
@@ -86,7 +80,6 @@ namespace MijanTools.Components
             {
                 poolObject.gameObject.name = $"{poolObject.gameObject.name}_{_count}";
                 poolObject.gameObject.SetActive(false);
-                // poolable.Pool = this;
                 _pool.Add(poolObject);
                 _count++;
             }
