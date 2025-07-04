@@ -376,6 +376,12 @@ namespace MijanTools.Common
                 totalWeight += item.Weight;
             }
 
+            if (totalWeight <= 0f)
+            {
+                Assert.IsTrue(false, "Weighted list has a total weight of 0.");
+                return (-1, default);
+            }
+
             var random = Random.Range(0f, totalWeight);
             var currentWeight = 0f;
             for (int i = 0; i < list.Count; i++)
@@ -393,7 +399,7 @@ namespace MijanTools.Common
                 }
             }
 
-            Assert.IsTrue(true, "Failed to get random item from weighted list.");
+            Assert.IsTrue(false, "Failed to get random item from weighted list.");
             return (-1, default);
         }
     }
