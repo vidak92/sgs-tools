@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
+using MijanTools.Components;
 using UnityEngine;
 
 namespace MijanTools.Util
 {
     public class DebugDraw : MonoBehaviour
     {
+        enum QuadShapeType
+        {
+            Circle,
+            Rect,
+            Line
+        }
+        
         private struct DrawLineData
         {
             public Vector3 Point1;
@@ -16,6 +24,22 @@ namespace MijanTools.Util
             {
                 Point1 = point1;
                 Point2 = point2;
+                Color = color;
+                SortOrder = sortOrder;
+            }
+        }
+        
+        private struct DrawRectData
+        {
+            public Vector3 Center;
+            public Vector2 Size;
+            public Color Color;
+            public int SortOrder;
+
+            public DrawRectData(Vector3 center, Vector2 size, Color color, int sortOrder)
+            {
+                Center = center;
+                Size = size;
                 Color = color;
                 SortOrder = sortOrder;
             }
@@ -41,7 +65,7 @@ namespace MijanTools.Util
         {
             public static float LineWidth = 0.1f;
             public static string SortLayerName = "Default";
-            public static int StartingSortOrder = 0;
+            public static int StartingSortOrder = 1000;
             public static Color DefaultColor = Color.white;
         }
 
@@ -49,88 +73,147 @@ namespace MijanTools.Util
 
         public static bool IsEnabled = false;
 
-        private Transform _activeParent;
-        private Transform _pooledParent;
+        private const string _quadShapeShaderName = "Custom/QuadShape";
+        private Mesh _quadMesh;
+        private Material _quadShapeMaterial;
+        private ObjectPool<QuadShape> _quadShapePool;
+        private const int _initialCapacity = 100;
+        
+        private Transform _activeObjectsParent;
 
-        private int _maxLines;
-        private List<LineRenderer> _pooledLines;
-        private List<LineRenderer> _activeLines;
-
-        private Material _lineMaterial;
         private List<DrawLineData> _linesToDraw;
         private List<DrawCircleData> _circlesToDraw;
+        private List<DrawRectData> _rectsToDraw;
         private int _totalDrawn;
 
         private void LateUpdate()
         {
-            // Return lines to pool.
-            for (int i = _activeLines.Count - 1; i >= 0; i--)
-            {
-                var line = _activeLines[i];
-                line.SetPosition(0, Vector3.zero);
-                line.SetPosition(1, Vector3.zero);
-                _activeLines.RemoveAt(i);
-                line.transform.parent = _pooledParent;
-                _pooledLines.Add(line);
-            }
-            _totalDrawn = 0;
+            _quadShapePool.ReturnAllActiveObjects();
 
-            // Update lines visibility.
-            _activeParent.gameObject.SetActive(IsEnabled);
+            // update visibility
+            _activeObjectsParent.gameObject.SetActive(IsEnabled);
 
-            // Update for DrawLine.
+            // draw lines
             foreach (var drawLineData in _linesToDraw)
             {
-                var color = drawLineData.Color;
                 var p1 = drawLineData.Point1;
                 var p2 = drawLineData.Point2;
-                var sortOrder = Settings.StartingSortOrder + drawLineData.SortOrder;
+                var center = (p1 + p2) / 2f;
+                var direction = p2 - p1;
+                var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                
+                var quadShape = _quadShapePool.Get();
+                quadShape.transform.parent = _activeObjectsParent;
+                quadShape.gameObject.name = "QuadShape_Line";
+                quadShape.transform.position = center;
+                quadShape.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                quadShape.transform.localScale = new Vector3(direction.magnitude, Settings.LineWidth, 1f);
 
-                var line = GetLineObjectFromPool();
-                line.positionCount = 2;
-                line.useWorldSpace = true;
-                line.startColor = color;
-                line.endColor = color;
-                line.startWidth = Settings.LineWidth;
-                line.endWidth = Settings.LineWidth;
-                line.SetPosition(0, p1);
-                line.SetPosition(1, p2);
-                line.sortingLayerName = Settings.SortLayerName;
-                line.sortingOrder = sortOrder;
-                line.transform.parent = _activeParent;
-                _activeLines.Add(line);
+                var mesh = quadShape.MeshFilter.mesh;
+                var shapeDataUV = new Vector3((int)QuadShapeType.Line, 0f, 0f);
+                mesh.SetUVs(1, new List<Vector3>
+                {
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                });
+
+                var color = drawLineData.Color;
+                var colorUV = new Vector4(color.r, color.g, color.b, color.a);
+                mesh.SetUVs(2, new List<Vector4>
+                {
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                });
+
+                var sortOrder = Settings.StartingSortOrder + drawLineData.SortOrder;
+                quadShape.MeshRenderer.sortingLayerName = Settings.SortLayerName;
+                quadShape.MeshRenderer.sortingOrder = sortOrder;
             }
             _linesToDraw.Clear();
 
-            // Update for DrawCircle.
+            // draw circles
             foreach (var drawCircleData in _circlesToDraw)
             {
-                var center = drawCircleData.Center;
-                var radius = drawCircleData.Radius;
-                var color = drawCircleData.Color;
-                var sortOrder = Settings.StartingSortOrder + drawCircleData.SortOrder;
+                var scale = drawCircleData.Radius * 2f + Settings.LineWidth;
+                var normalizedLineWidth = Settings.LineWidth / scale;
+                
+                var quadShape = _quadShapePool.Get();
+                quadShape.transform.parent = _activeObjectsParent;
+                quadShape.gameObject.name = "QuadShape_Circle";
+                quadShape.transform.position = drawCircleData.Center + Vector3.back;
+                quadShape.transform.rotation = Quaternion.identity;
+                quadShape.transform.localScale = Vector3.one * scale;
 
-                var n = 50;
-                var line = GetLineObjectFromPool();
-                line.positionCount = n + 1;
-                line.startColor = color;
-                line.endColor = color;
-                line.startWidth = 0.1f;
-                line.endWidth = 0.1f;
-                for (int i = 0; i <= n; i++)
+                var mesh = quadShape.MeshFilter.mesh;
+                var shapeDataUV = new Vector3((int)QuadShapeType.Circle, normalizedLineWidth, 0f);
+                mesh.SetUVs(1, new List<Vector3>
                 {
-                    var angle = (float)i / n * Mathf.Deg2Rad * 360f;
-                    var x = Mathf.Sin(angle) * radius;
-                    var y = Mathf.Cos(angle) * radius;
-                    line.SetPosition(i, new Vector3(x, y, 0f) + center);
-                }
-
-                line.sortingLayerName = Settings.SortLayerName;
-                line.sortingOrder = sortOrder;
-                line.transform.parent = _activeParent;
-                _activeLines.Add(line);
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                });
+                
+                var color = drawCircleData.Color;
+                var colorUV = new Vector4(color.r, color.g, color.b, color.a);
+                mesh.SetUVs(2, new List<Vector4>
+                {
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                });
+                
+                var sortOrder = Settings.StartingSortOrder + drawCircleData.SortOrder;
+                quadShape.MeshRenderer.sortingLayerName = Settings.SortLayerName;
+                quadShape.MeshRenderer.sortingOrder = sortOrder;
             }
             _circlesToDraw.Clear();
+            
+            // draw rects
+            foreach (var drawRectData in _rectsToDraw)
+            {
+                var size = drawRectData.Size;
+                var lineWidth = Settings.LineWidth;
+                var normalizedLineWidth = new Vector2(lineWidth / size.x, lineWidth / size.y);
+
+                var quadShape = _quadShapePool.Get();
+                quadShape.transform.parent = _activeObjectsParent;
+                quadShape.gameObject.name = "QuadShape_Rect";
+                quadShape.transform.position = drawRectData.Center;
+                quadShape.transform.rotation = Quaternion.identity;
+                quadShape.transform.localScale = new Vector3(drawRectData.Size.x + lineWidth, drawRectData.Size.y, 1f);
+                
+                var mesh = quadShape.MeshFilter.mesh;
+                var shapeDataUV = new Vector3((int)QuadShapeType.Rect, normalizedLineWidth.x, normalizedLineWidth.y);
+                mesh.SetUVs(1, new List<Vector3>
+                {
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                    shapeDataUV,
+                });
+                
+                var color = drawRectData.Color;
+                var colorUV = new Vector4(color.r, color.g, color.b, color.a);
+                mesh.SetUVs(2, new List<Vector4>
+                {
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                    colorUV,
+                });
+                
+                var sortOrder = Settings.StartingSortOrder + drawRectData.SortOrder;
+                quadShape.MeshRenderer.sortingLayerName = Settings.SortLayerName;
+                quadShape.MeshRenderer.sortingOrder = sortOrder;
+                
+            }
+            _rectsToDraw.Clear();
         }
 
         private static void Init()
@@ -145,27 +228,84 @@ namespace MijanTools.Util
 
         private void InitState()
         {
-            _activeParent = new GameObject("Active").transform;
-            _activeParent.parent = transform;
-
-            _pooledParent = new GameObject("Pooled").transform;
-            _pooledParent.parent = transform;
-            _pooledParent.gameObject.SetActive(false);
-
-            _lineMaterial = new Material(Shader.Find("Sprites/Default"));
-
-            _maxLines = 100;
-            _pooledLines = new List<LineRenderer>();
-            _activeLines = new List<LineRenderer>();
-            for (int i = 0; i < _maxLines; i++)
-            {
-                InstantiateLineObjectInPool();
-            }
-
             _linesToDraw = new List<DrawLineData>();
             _circlesToDraw = new List<DrawCircleData>();
+            _rectsToDraw = new List<DrawRectData>();
+
+            _quadMesh = new Mesh();
+            _quadMesh.vertices = new Vector3[]
+            {
+                new Vector3(-0.5f, -0.5f, 0f),
+                new Vector3(0.5f, -0.5f, 0f),
+                new Vector3(-0.5f, 0.5f, 0f),
+                new Vector3(0.5f, 0.5f, 0f),
+            };
+            _quadMesh.triangles = new int[]
+            {
+                2,
+                1,
+                0,
+                3,
+                1,
+                2,
+            };
+            _quadMesh.uv = new Vector2[]
+            {
+                new Vector2(0f, 0f),
+                new Vector2(1f, 0f),
+                new Vector2(0f, 1f),
+                new Vector2(1f, 1f),
+            };
+            _quadMesh.normals = new Vector3[]
+            {
+                new Vector3(0f, 0f, -1f),
+                new Vector3(0f, 0f, -1f),
+                new Vector3(0f, 0f, -1f),
+                new Vector3(0f, 0f, -1f),
+            };
+            _quadMesh.tangents = new Vector4[]
+            {
+                new Vector4(1f, 0f, 0f, -1f),
+                new Vector4(1f, 0f, 0f, -1f),
+                new Vector4(1f, 0f, 0f, -1f),
+                new Vector4(1f, 0f, 0f, -1f),
+            };
+            
+            var shader = Shader.Find(_quadShapeShaderName);
+            if (shader == null)
+            {
+                Debug.LogError($"{nameof(DebugDraw)}: Cannot find shader {_quadShapeShaderName}");
+            }
+            _quadShapeMaterial = new Material(shader);
+            
+            var quadShapeObject = new GameObject("QuadShapePrefab");
+            quadShapeObject.SetActive(false);
+            quadShapeObject.transform.parent = _instance.transform;
+            
+            var quadShape = quadShapeObject.AddComponent<QuadShape>();
+            var meshFilter = quadShapeObject.AddComponent<MeshFilter>();
+            meshFilter.sharedMesh = _quadMesh;
+            quadShape.MeshFilter = meshFilter;
+            
+            var meshRenderer = quadShapeObject.AddComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = _quadShapeMaterial;
+            meshRenderer.sortingLayerName = Settings.SortLayerName;
+            meshRenderer.sortingOrder = Settings.StartingSortOrder;
+            quadShape.MeshRenderer = meshRenderer;
+            
+            _quadShapePool = ObjectPool<QuadShape>.CreateWithGameObject(quadShape, _initialCapacity, "DebugDraw_QuadShapePool");
+
+            var activeObjectsParentObject = new GameObject("ActiveObjects");
+            activeObjectsParentObject.transform.parent = _instance.transform;
+            _activeObjectsParent = activeObjectsParentObject.transform;
+
         }
 
+        public static void DrawLine(Vector3 p1, Vector3 p2)
+        {
+            DrawLine(p1, p2, Settings.DefaultColor);
+        }
+        
         public static void DrawLine(Vector3 p1, Vector3 p2, Color color)
         {
             Init();
@@ -186,55 +326,18 @@ namespace MijanTools.Util
             _instance._circlesToDraw.Add(new DrawCircleData(center, radius, color, _instance._totalDrawn));
             _instance._totalDrawn++;
         }
-        
+
+        public static void DrawRect(Vector3 center, Vector2 size)
+        {
+            DrawRect(center, size, Settings.DefaultColor);
+        }
+
         public static void DrawRect(Vector3 center, Vector2 size, Color color)
         {
             Init();
 
-            var bottomLeft = center + new Vector3(-size.x, -size.y, 0f);
-            var bottomRight = center + new Vector3(size.x, -size.y, 0f);
-            var topRight = center + new Vector3(size.x, size.y, 0f);
-            var topLeft = center + new Vector3(-size.x, size.y, 0f);
-
-            DrawLine(bottomLeft, bottomRight, color);
-            DrawLine(bottomRight, topRight, color);
-            DrawLine(topRight, topLeft, color);
-            DrawLine(topLeft, bottomLeft, color);
-        }
-
-        private LineRenderer GetLineObjectFromPool()
-        {
-            // If pool is empty, instantiate a new line.
-            if (_pooledLines.Count == 0)
-            {
-                InstantiateLineObjectInPool();
-            }
-
-            // Get last line from pool.
-            var lastIndex = _pooledLines.Count - 1;
-            var line = _pooledLines[lastIndex];
-            line.transform.parent = null;
-            _pooledLines.RemoveAt(lastIndex);
-            return line;
-        }
-
-        private LineRenderer InstantiateLineObjectInPool()
-        {
-            var lineObject = new GameObject($"Line{_pooledLines.Count}");
-            lineObject.transform.parent = _pooledParent;
-
-            var line = lineObject.AddComponent<LineRenderer>();
-            line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            line.receiveShadows = false;
-            line.motionVectorGenerationMode = MotionVectorGenerationMode.Camera;
-            line.sharedMaterial = _lineMaterial;
-            line.useWorldSpace = true;
-            line.loop = false;
-            line.sortingLayerName = "Debug";
-
-            _pooledLines.Add(line);
-
-            return line;
+            _instance._rectsToDraw.Add(new DrawRectData(center, size, color, _instance._totalDrawn));
+            _instance._totalDrawn++;
         }
     }
 }
