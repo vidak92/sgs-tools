@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using MijanTools.Components;
+using SGSTools.Components;
 using UnityEngine;
 
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public class DebugDraw : MonoBehaviour
     {

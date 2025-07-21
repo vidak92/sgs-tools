@@ -1,9 +1,9 @@
-﻿using MijanTools.Common;
-using System;
-using MijanTools.Data;
+﻿using System;
+using SGSTools.Common;
+using SGSTools.Data;
 using UnityEngine;
 
-namespace MijanTools.Components
+namespace SGSTools.Components
 {
     [Serializable]
     public class SoundEffect

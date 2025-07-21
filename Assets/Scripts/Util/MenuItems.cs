@@ -3,7 +3,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public static class MenuItems
     {

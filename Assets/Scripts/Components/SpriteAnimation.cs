@@ -1,7 +1,7 @@
-using MijanTools.Common;
+using SGSTools.Common;
 using UnityEngine;
 
-namespace MijanTools.Components
+namespace SGSTools.Components
 {
     // TODO: Add looping options.
     public class SpriteAnimation : MonoBehaviour

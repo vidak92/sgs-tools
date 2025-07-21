@@ -1,4 +1,4 @@
-Shader "Custom/QuadShape"
+Shader "SGS/QuadShape"
 {
     Properties
     {

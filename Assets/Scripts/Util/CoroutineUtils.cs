@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public class CoroutineUtils : MonoBehaviour
     {

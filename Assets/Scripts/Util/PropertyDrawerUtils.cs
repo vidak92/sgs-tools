@@ -1,4 +1,4 @@
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public static class PropertyDrawerUtils
     {

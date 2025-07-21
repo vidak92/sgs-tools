@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MijanTools.Extensions
+namespace SGSTools.Extensions
 {
     public static class MathfExt
     {

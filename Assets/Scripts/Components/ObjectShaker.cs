@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using MijanTools.Common;
+﻿using SGSTools.Common;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace MijanTools.Components
+namespace SGSTools.Components
 {
 #if UNITY_EDITOR
     [CustomEditor(typeof(ObjectShaker))]

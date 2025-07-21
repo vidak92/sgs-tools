@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public class FieldPairDrawer : PropertyDrawer
     {

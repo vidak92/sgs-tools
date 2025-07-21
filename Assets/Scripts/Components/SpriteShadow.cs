@@ -1,7 +1,7 @@
-﻿using MijanTools.Common;
+﻿using SGSTools.Common;
 using UnityEngine;
 
-namespace MijanTools.Components
+namespace SGSTools.Components
 {
     public class SpriteShadow : MonoBehaviour
     {

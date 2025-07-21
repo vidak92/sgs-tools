@@ -1,7 +1,7 @@
 {
-    "name": "com.vidak-mijanovic.mijan-tools",
+    "name": "com.vidak-mijanovic.sgs-tools",
     "version": "0.1.0",
-    "displayName": "Mijan Tools",
+    "displayName": "SGS Tools",
     "dependencies":
     {
         "com.unity.textmeshpro": "3.0.6"

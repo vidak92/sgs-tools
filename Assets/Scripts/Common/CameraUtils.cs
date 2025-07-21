@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MijanTools.Common
+namespace SGSTools.Common
 {
     public static class CameraUtils
     {

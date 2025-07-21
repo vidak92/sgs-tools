@@ -1,10 +1,10 @@
 using UnityEngine;
 #if UNITY_EDITOR
-using MijanTools.Util;
+using SGSTools.Util;
 using UnityEditor;
 #endif
 
-namespace MijanTools.Data
+namespace SGSTools.Data
 {
     [System.Serializable]
     public class MinMaxInt

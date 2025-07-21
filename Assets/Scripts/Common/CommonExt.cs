@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace MijanTools.Common
+namespace SGSTools.Common
 { 
     public static class CommonExt
     {
@@ -249,7 +249,7 @@ namespace MijanTools.Common
             return dictionary.ContainsKey(key);
         }
 
-        // List/array
+        // List/array, TODO IsEmpty
         public static bool IsNullOrEmpty<T>(this T[] array)
         {
             return array == null || array.Length == 0;

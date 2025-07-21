@@ -1,4 +1,4 @@
-﻿Shader "Custom/VignetteShader"
+﻿Shader "SGS/VignetteShader"
 {
     Properties
     {

@@ -1,4 +1,4 @@
-﻿Shader "Custom/FishEye" 
+﻿Shader "SGS/FishEye" 
 {
     Properties
     {

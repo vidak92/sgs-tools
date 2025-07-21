@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MijanTools.Components
+namespace SGSTools.Components
 {
     public class QuadShape : MonoBehaviour
     {

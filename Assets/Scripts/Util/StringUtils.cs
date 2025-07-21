@@ -1,7 +1,7 @@
-﻿using MijanTools.Common;
+﻿using SGSTools.Common;
 using UnityEngine;
 
-namespace MijanTools.Util
+namespace SGSTools.Util
 {
     public static class StringUtils
     {
