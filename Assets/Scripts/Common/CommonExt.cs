@@ -340,7 +340,7 @@ namespace SGSTools.Common
         {
             if (!list.IsNullOrEmpty())
             {
-                var randomIndex = Random.Range(0, list.Count - 1);
+                var randomIndex = Random.Range(0, list.Count);
                 return randomIndex;
             }
             Debug.Log("Trying to get a random index from an empty or uninitialized list. Returning default value...");

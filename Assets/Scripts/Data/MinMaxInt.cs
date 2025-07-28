@@ -14,7 +14,7 @@ namespace SGSTools.Data
 
         public float GetRandomValue()
         {
-            return Random.Range(Min, Max);
+            return Random.Range(Min, Max + 1); // max inclusive
         }
         
         public float GetValueAt(float t)
