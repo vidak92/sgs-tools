@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SGSTools.Util;
 using SGSTools.Components;
 using UnityEngine;
 
@@ -73,7 +74,7 @@ namespace SGSTools.Util
 
         public static bool IsEnabled = false;
 
-        private const string _quadShapeShaderName = "Custom/QuadShape";
+        private const string _quadShapeShaderName = "SGS/QuadShape";
         private Mesh _quadMesh;
         private Material _quadShapeMaterial;
         private ObjectPool<QuadShape> _quadShapePool;
@@ -232,44 +233,7 @@ namespace SGSTools.Util
             _circlesToDraw = new List<DrawCircleData>();
             _rectsToDraw = new List<DrawRectData>();
 
-            _quadMesh = new Mesh();
-            _quadMesh.vertices = new Vector3[]
-            {
-                new Vector3(-0.5f, -0.5f, 0f),
-                new Vector3(0.5f, -0.5f, 0f),
-                new Vector3(-0.5f, 0.5f, 0f),
-                new Vector3(0.5f, 0.5f, 0f),
-            };
-            _quadMesh.triangles = new int[]
-            {
-                2,
-                1,
-                0,
-                3,
-                1,
-                2,
-            };
-            _quadMesh.uv = new Vector2[]
-            {
-                new Vector2(0f, 0f),
-                new Vector2(1f, 0f),
-                new Vector2(0f, 1f),
-                new Vector2(1f, 1f),
-            };
-            _quadMesh.normals = new Vector3[]
-            {
-                new Vector3(0f, 0f, -1f),
-                new Vector3(0f, 0f, -1f),
-                new Vector3(0f, 0f, -1f),
-                new Vector3(0f, 0f, -1f),
-            };
-            _quadMesh.tangents = new Vector4[]
-            {
-                new Vector4(1f, 0f, 0f, -1f),
-                new Vector4(1f, 0f, 0f, -1f),
-                new Vector4(1f, 0f, 0f, -1f),
-                new Vector4(1f, 0f, 0f, -1f),
-            };
+            _quadMesh = MeshUtils.GenerateQuadMesh();
             
             var shader = Shader.Find(_quadShapeShaderName);
             if (shader == null)

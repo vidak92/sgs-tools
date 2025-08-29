@@ -41,6 +41,13 @@ namespace SGSTools.Common
             return $"#{ColorUtility.ToHtmlStringRGB(color)}";
         }
 
+        public static Color ToColor(this string hex)
+        {
+            var color = Color.black;
+            ColorUtility.TryParseHtmlString(hex, out color);
+            return color;
+        }
+
         public static Color MultiplyIgnoringAlpha(this Color color, float multiplier)
         {
             return new Color(color.r * multiplier, color.g * multiplier, color.b * multiplier, color.a);

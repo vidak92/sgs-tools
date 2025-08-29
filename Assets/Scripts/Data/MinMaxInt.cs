@@ -12,7 +12,7 @@ namespace SGSTools.Data
         public int Min;
         public int Max;
 
-        public float GetRandomValue()
+        public int GetRandomValue()
         {
             return Random.Range(Min, Max + 1); // max inclusive
         }
