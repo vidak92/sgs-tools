@@ -7,25 +7,25 @@ namespace SGSTools.Util
 {
     public static class MenuItems
     {
-        [MenuItem("Mijan Tools/Player Prefs/Delete All")]
+        [MenuItem("SGS Tools/Player Prefs/Delete All")]
         public static void DeleteAllPlayerPrefs()
         {
             PlayerPrefs.DeleteAll();
         }
 
-        [MenuItem("Mijan Tools/Application Data Path/Print to Console")]
+        [MenuItem("SGS Tools/Application Data Path/Print to Console")]
         public static void LogApplicationDataPath()
         {
             Debug.Log(Application.persistentDataPath);
         }
 
-        [MenuItem("Mijan Tools/Application Data Path/Open Folder")]
+        [MenuItem("SGS Tools/Application Data Path/Open Folder")]
         public static void OpenApplicationDataPath()
         {
             EditorUtility.RevealInFinder(Application.persistentDataPath);
         }
 
-        [MenuItem("Mijan Tools/Take Screenshot")]
+        [MenuItem("SGS Tools/Take Screenshot")]
         public static void TakeScreenshot()
         {
             // TODO extract method to EditorUtils

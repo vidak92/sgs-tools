@@ -30,6 +30,12 @@ namespace SGSTools.Common
         /// <param name="camera">If null, Camera.main is used.</param>
         public static Vector3 GetMouseWorldPosition2D(Camera camera = null)
         {
+            return GetWorldPosition2D(Input.mousePosition);
+        }
+        
+        /// <param name="camera">If null, Camera.main is used.</param>
+        public static Vector3 GetWorldPosition2D(Vector3 screenPosition, Camera camera = null)
+        {
             // fallback to main camera
             if (camera == null)
             {
@@ -37,7 +43,7 @@ namespace SGSTools.Common
             }
 
             // convert to world space
-            var mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePosition = camera.ScreenToWorldPoint(screenPosition);
             mousePosition.z = 0f;
             
             return mousePosition;

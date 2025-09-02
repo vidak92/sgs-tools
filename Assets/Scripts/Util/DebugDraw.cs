@@ -90,6 +90,7 @@ namespace SGSTools.Util
         private void LateUpdate()
         {
             _quadShapePool.ReturnAllActiveObjects();
+            _totalDrawn = 0;
 
             // update visibility
             _activeObjectsParent.gameObject.SetActive(IsEnabled);
