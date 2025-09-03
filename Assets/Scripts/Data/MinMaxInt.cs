@@ -17,16 +17,23 @@ namespace SGSTools.Data
             return Random.Range(Min, Max + 1); // max inclusive
         }
         
-        public float GetValueAt(float t)
+        public int GetValueAt(float t)
         {
-            var value = Mathf.Lerp(Min, Max, t);
-            value = GetClampedValue(value);
-            return value;
+            var floatValue = Mathf.Lerp(Min, Max, t);
+            var value = Mathf.RoundToInt(floatValue);
+            return GetClampedValue(value);
         }
 
-        public float GetClampedValue(float value)
+        public int GetClampedValue(int value)
         {
             return Mathf.Clamp(value, Min, Max);
+        }
+        
+        public float GetInverseValue(int value)
+        {
+            var t = Mathf.InverseLerp(Min, Max, value);
+            t = Mathf.Clamp01(t);
+            return t;
         }
     }
 #if UNITY_EDITOR
