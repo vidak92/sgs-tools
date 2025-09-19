@@ -12,6 +12,18 @@ namespace SGSTools.Data
         public int Min;
         public int Max;
 
+        public MinMaxInt()
+        {
+            Min = 0;
+            Max = 0;
+        }
+
+        public MinMaxInt(int min, int max)
+        {
+            Min = min;
+            Max = max;
+        }
+
         public int GetRandomValue()
         {
             return Random.Range(Min, Max + 1); // max inclusive
