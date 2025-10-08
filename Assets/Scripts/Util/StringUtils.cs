@@ -23,11 +23,6 @@ namespace SGSTools.Util
             InitStringBuilder();
 
             _stringBuilder.Append(text);
-            if (color != null)
-            {
-                _stringBuilder.Insert(0, $"<color={color.Value.ToHex()}>");
-                _stringBuilder.Append("</color>");
-            }
             if (bold)
             {
                 _stringBuilder.Insert(0, "<b>");
@@ -37,6 +32,11 @@ namespace SGSTools.Util
             {
                 _stringBuilder.Insert(0, "<u>");
                 _stringBuilder.Append("</u>");
+            }
+            if (color != null)
+            {
+                _stringBuilder.Insert(0, $"<color={color.Value.ToHex()}>");
+                _stringBuilder.Append("</color>");
             }
 
             var taggedString = _stringBuilder.ToString();

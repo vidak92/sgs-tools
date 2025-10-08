@@ -354,6 +354,30 @@ namespace SGSTools.Common
             return default;
         }
 
+        public static int GetWrappedIndex<T>(this T[] array, int index)
+        {
+            if (array.IsNullOrEmpty())
+            {
+                // TODO assert
+                Debug.LogWarning("Trying to get a wrapped index from an empty or uninitialized array. Returning default value...");
+                return default;
+            }
+            var wrappedIndex = MathfExt.GetWrappedValue(index, array.Length);
+            return wrappedIndex;
+        }
+        
+        public static int GetWrappedIndex<T>(this List<T> list, int index)
+        {
+            if (list.IsNullOrEmpty())
+            {
+                // TODO assert
+                Debug.LogWarning("Trying to get a wrapped index from an empty or uninitialized list. Returning default value...");
+                return default;
+            }
+            var wrappedIndex = MathfExt.GetWrappedValue(index, list.Count);
+            return wrappedIndex;
+        }
+
         // TODO: Add list/array extensions for sum, average, etc. 
         // Add support for int, float, Vector2, Vector3 or whatever else makes sense.
         

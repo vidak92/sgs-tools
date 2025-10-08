@@ -355,7 +355,16 @@ namespace SGSTools.Common
             tempEulerAngles.z = eulerZ;
             transform.localRotation = Quaternion.Euler(tempEulerAngles);
         }
-        // TODO: Add Local Rotation
+        
+        // Add Local Rotation
+        public static void AddLocalRotationZ(this Transform transform, float z)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.z += z;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
+        // TODO All Local Rotation other cases
+
         // TODO: Clamp Local Rotation
 
         // Set Local Scale

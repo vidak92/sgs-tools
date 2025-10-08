@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SGSTools.Extensions
+namespace SGSTools.Common
 {
     public static class MathfExt
     {
@@ -81,6 +81,29 @@ namespace SGSTools.Extensions
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
             return new Vector3(x, y, 0f);
+        }
+
+        /// <returns>wrapped `value` such that it's always between 0 and max (exclusive)</returns>
+        public static int GetWrappedValue(int value, int maxExclusive)
+        {
+            if (maxExclusive < 0)
+            {
+                // TODO assert?
+            }
+            
+            if (value >= maxExclusive)
+            {
+                value %= maxExclusive;
+            }
+            else
+            {
+                // TODO find a way to do this without a loop
+                while (value < 0)
+                {
+                    value += maxExclusive;    
+                }
+            }
+            return value;
         }
     }
 }

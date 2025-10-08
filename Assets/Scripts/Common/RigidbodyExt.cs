@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SGSTools.Extensions
+namespace SGSTools.Common
 {
     public static class RigidbodyExt
     {
