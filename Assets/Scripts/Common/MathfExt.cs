@@ -76,7 +76,7 @@ namespace SGSTools.Common
         }
 
         /// <param name="angle">in radians</param>
-        public static Vector3 AngleToVector(float angle, float radius)
+        public static Vector3 AngleToVectorXY(float angle, float radius) // TODO rename to AngleToVectorXY
         {
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;

@@ -547,6 +547,11 @@ namespace SGSTools.Common
         {
             rectTransform.sizeDelta = new Vector2(x, y);
         }
+        
+        public static void SetSizeDelta(this RectTransform rectTransform, float size)
+        {
+            rectTransform.sizeDelta = new Vector2(size, size);
+        }
 
         // Add Size Delta
         public static void AddSizeDeltaX(this RectTransform rectTransform, float x)
