@@ -18,7 +18,7 @@ namespace SGSTools.Util
         }
 
         // Rich text tags.
-        public static string GetTaggedString(this string text, Color? color = null, bool bold = false, bool underline = false)
+        public static string GetTaggedString(this string text, string colorHex = "", bool bold = false, bool underline = false)
         {
             InitStringBuilder();
 
@@ -33,15 +33,26 @@ namespace SGSTools.Util
                 _stringBuilder.Insert(0, "<u>");
                 _stringBuilder.Append("</u>");
             }
-            if (color != null)
+            if (!string.IsNullOrEmpty(colorHex))
             {
-                _stringBuilder.Insert(0, $"<color={color.Value.ToHex()}>");
+                _stringBuilder.Insert(0, $"<color={colorHex}>");
                 _stringBuilder.Append("</color>");
             }
 
             var taggedString = _stringBuilder.ToString();
             _stringBuilder.Clear(); // NOTE not really necessary to clear here
             return taggedString;
+        }
+
+        public static string GetTaggedString(this string text, Color? color = null, bool bold = false, bool underline = false)
+        {
+            var colorHex = color?.ToHex() ?? "";
+            return GetTaggedString(text, colorHex, bold, underline);
+        }
+
+        public static string Underlined(this string text)
+        {
+            return $"<u>{text}</u>";
         }
 
         public static string GetSpriteTag(this string name, Color color)
