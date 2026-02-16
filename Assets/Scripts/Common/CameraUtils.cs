@@ -17,7 +17,7 @@ namespace SGSTools.Common
                 return _mainCamera;
             }
         }
-
+        
         public static Rect GetMainCameraOrthrographicBounds()
         {
             var height = MainCamera.orthographicSize * 2f;
@@ -28,13 +28,16 @@ namespace SGSTools.Common
         }
 
         /// <param name="camera">If null, Camera.main is used.</param>
-        public static Vector3 GetMouseWorldPosition2D(Camera camera = null)
+        /// <returns>2D (x,y) position, z coord. is set to zero.</returns>
+        public static Vector3 GetMouseWorldPositionXY(Camera camera = null)
         {
-            return GetWorldPosition2D(Input.mousePosition);
+            return GetWorldPositionXY(Input.mousePosition);
         }
         
+        
         /// <param name="camera">If null, Camera.main is used.</param>
-        public static Vector3 GetWorldPosition2D(Vector3 screenPosition, Camera camera = null)
+        /// /// <returns>2D (x,y) position, z coord. is set to zero.</returns>
+        public static Vector3 GetWorldPositionXY(Vector3 screenPosition, Camera camera = null)
         {
             // fallback to main camera
             if (camera == null)

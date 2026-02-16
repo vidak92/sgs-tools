@@ -6,10 +6,12 @@ namespace SGSTools.Util
 {
     public static class MeshUtils
     {
-        public const string ASSETS_FOLDER_PATH = "Packages/com.vidak-mijanovic.sgs-tools/Assets";
-        public const string MESHES_SUBFOLDER_PATH = "/Meshes";
-        public static readonly string QUAD_MESH_FOLDER_PATH = $"{ASSETS_FOLDER_PATH}{MESHES_SUBFOLDER_PATH}";
-        public static readonly string QUAD_MESH_ASSET_PATH = $"{QUAD_MESH_FOLDER_PATH}/SGSQuad.asset";
+        public const string QUAD_MESH_ASSET_NAME = "SGSQuad.asset";
+        public const string QUAD_MESH_PACKAGE_FOLDER_PATH = "Packages/com.vidak-mijanovic.sgs-tools/Assets/Meshes";
+        public const string QUAD_MESH_PROJECT_FOLDER_PATH = "Assets/Resources/SGS/Meshes";
+        public static readonly string QUAD_MESH_PACKAGE_ASSET_PATH = $"{QUAD_MESH_PACKAGE_FOLDER_PATH}/{QUAD_MESH_ASSET_NAME}";
+        public static readonly string QUAD_MESH_PROJECT_ASSET_PATH = $"{QUAD_MESH_PROJECT_FOLDER_PATH}/{QUAD_MESH_ASSET_NAME}";
+        public static readonly string QUAD_MESH_RESOURCES_LOAD_PATH = $"SGS/Meshes/SGSQuad";
 
         private static Mesh _quadMesh;
 
@@ -17,7 +19,7 @@ namespace SGSTools.Util
         {
             if (_quadMesh == null)
             {
-                _quadMesh = LoadQuadMeshAsset();
+                _quadMesh = Resources.Load<Mesh>(QUAD_MESH_RESOURCES_LOAD_PATH);
                 if (_quadMesh == null)
                 {
                     Debug.LogError($"SGSTools: Couldn't get quad mesh");
@@ -25,44 +27,49 @@ namespace SGSTools.Util
             }
             return _quadMesh;
         }
-
-        public static Mesh LoadQuadMeshAsset()
-        {
-            var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(QUAD_MESH_ASSET_PATH);
-            if (mesh == null)
-            {
-                Debug.LogError($"SGSTools: Couldn't load quad mesh asset from {QUAD_MESH_ASSET_PATH}");
-            }
-            return mesh;
-        }
-
+        
 #if UNITY_EDITOR
         [MenuItem("SGS Tools/Mesh Utils/Generate Quad Mesh")]
-        public static void GenerateAndSaveQuadMeshAsset()
+        public static bool CreateQuadMeshAsset()
         {
             var mesh = GenerateQuadMesh();
             
-            if (!AssetDatabase.AssetPathExists(QUAD_MESH_FOLDER_PATH))
+            var success = EditorUtils.CreateAssetIncludingFolderPath(mesh, QUAD_MESH_PACKAGE_FOLDER_PATH, QUAD_MESH_ASSET_NAME);
+            if (!success)
             {
-                var guid = AssetDatabase.CreateFolder(ASSETS_FOLDER_PATH, MESHES_SUBFOLDER_PATH);
-                if (string.IsNullOrEmpty(guid))
-                {
-                    Debug.LogError($"SGSTools: Couldn't create  new folder for quad mesh at {QUAD_MESH_FOLDER_PATH}");
-                    return;
-                }
-                Debug.Log($"SGSTools: Created new folder for quad mesh at {QUAD_MESH_FOLDER_PATH}");
+                Debug.LogError($"SGSTools: Couldn't create asset {QUAD_MESH_ASSET_NAME} in folder {QUAD_MESH_PACKAGE_FOLDER_PATH}");
+                return false;
             }
             
-            if (AssetDatabase.AssetPathExists(QUAD_MESH_ASSET_PATH))
+            Debug.Log($"SGSTools: Saved quad mesh asset to {QUAD_MESH_PACKAGE_ASSET_PATH}");
+            return true;
+        }
+        
+        [MenuItem("SGS Tools/Mesh Utils/Generate Quad Mesh & Copy to Project")]
+        public static bool CreateQuadMeshAssetAndCopyToProject()
+        {
+            var success = CreateQuadMeshAsset();
+            if (!success)
             {
-                Debug.LogWarning($"SGSTools: Overwriting existing quad mesh asset at {QUAD_MESH_ASSET_PATH}");
+                return false;
             }
             
-            AssetDatabase.CreateAsset(mesh, QUAD_MESH_ASSET_PATH);
-            // TODO check if asset was successfully created?
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log($"SGSTools: Saved quad mesh asset to {QUAD_MESH_ASSET_PATH}");
+            success = EditorUtils.CreateAssetFolderPath(QUAD_MESH_PROJECT_FOLDER_PATH);
+            if (!success)
+            {
+                Debug.LogError($"SGSTools: Couldn't create asset {QUAD_MESH_ASSET_NAME} in folder {QUAD_MESH_PROJECT_FOLDER_PATH}");
+                return false;
+            }
+
+            success = AssetDatabase.CopyAsset(QUAD_MESH_PACKAGE_ASSET_PATH, QUAD_MESH_PROJECT_ASSET_PATH);
+            if (!success)
+            {
+                Debug.LogError($"SGSTools: Failed to copy asset from {QUAD_MESH_PACKAGE_ASSET_PATH} to {QUAD_MESH_PROJECT_ASSET_PATH}");
+                return false;
+            }
+            
+            Debug.Log($"SGSTools: Saved quad mesh asset to {QUAD_MESH_PACKAGE_ASSET_PATH}, copied to {QUAD_MESH_PROJECT_ASSET_PATH}");
+            return true;
         }
 #endif
 
