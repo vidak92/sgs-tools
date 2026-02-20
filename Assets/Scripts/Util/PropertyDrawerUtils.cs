@@ -6,7 +6,7 @@ namespace SGSTools.Util
         {
             if (string.IsNullOrEmpty(propertyName))
             {
-                // TODO: Log warning.
+                // @TODO Log warning.
                 return "";
             }
             return $"<{propertyName}>k__BackingField";

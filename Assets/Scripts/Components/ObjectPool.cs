@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SGSTools.Common;
+using SGSTools.Extensions;
 using UnityEngine;
 
 namespace SGSTools.Components
@@ -38,14 +38,16 @@ namespace SGSTools.Components
 
         public void Return(T poolObject)
         {
-            if (_pool.Contains(poolObject))
+            if (poolObject.transform.parent == Parent)
             {
-                Debug.LogWarning($"Object pool already contains object {poolObject}, skipping return.");
+                // @TODO check if poolObject is actually in the _pool list, but make it performant
+                Debug.LogWarning($"{nameof(ObjectPool<T>)}: Pool already contains object {poolObject.name}, skipping return.");
                 return;
             }
             
             poolObject.gameObject.SetActive(false);
-            poolObject.transform.SetParent(Parent, false);
+            poolObject.transform.localPosition = Vector3.zero;
+            poolObject.transform.SetParent(Parent, worldPositionStays: false);
             _pool.Add(poolObject);
             _activeObjects.Remove(poolObject);
         }
@@ -62,8 +64,9 @@ namespace SGSTools.Components
                 var poolObject = _pool[0];
                 _pool.RemoveAt(0);
                 _activeObjects.Add(poolObject);
+                poolObject.transform.localPosition = Vector3.zero;
                 poolObject.gameObject.SetActive(true);
-                poolObject.gameObject.transform.SetParent(null, false);
+                poolObject.gameObject.transform.SetParent(null, worldPositionStays: true);
                 return poolObject;
             }
             else
@@ -80,6 +83,7 @@ namespace SGSTools.Components
             {
                 poolObject.gameObject.name = $"{poolObject.gameObject.name}_{_count}";
                 poolObject.gameObject.SetActive(false);
+                poolObject.transform.localPosition = Vector3.zero;
                 _pool.Add(poolObject);
                 _count++;
             }

@@ -1,6 +1,6 @@
 {
-    "name": "com.vidak-mijanovic.sgs-tools",
-    "version": "0.1.2",
+    "name": "com.sgs.sgs-tools",
+    "version": "0.1.3",
     "displayName": "SGS Tools",
     "dependencies":
     {

@@ -17,6 +17,7 @@ namespace SGSTools.Util
             Clear();
         }
 
+        [RuntimeInitializeOnLoadMethod]
         public static void Clear()
         {
             _services.Clear();

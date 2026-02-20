@@ -1,9 +1,9 @@
-using SGSTools.Common;
+using SGSTools.Extensions;
 using UnityEngine;
 
 namespace SGSTools.Components
 {
-    // TODO: Add looping options.
+    // @TODO Add looping options.
     public class SpriteAnimation : MonoBehaviour
     {
         public SpriteRenderer SpriteRenderer;

@@ -1,4 +1,4 @@
-﻿using SGSTools.Common;
+﻿using SGSTools.Extensions;
 using UnityEngine;
 
 namespace SGSTools.Components

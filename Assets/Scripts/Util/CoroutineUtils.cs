@@ -21,7 +21,7 @@ namespace SGSTools.Util
 
         private void InitState()
         {
-            // TODO: Setup internal state here.
+            // @TODO Setup internal state here.
         }
 
         // Public Methods

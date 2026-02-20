@@ -1,44 +1,38 @@
 using UnityEngine;
 
-namespace SGSTools.Common
+namespace SGSTools.Extensions
 {
     public static class TransformExt
     {
         // Set Position
         public static void SetPositionX(this Transform transform, float x)
         {
-            var tempPosition = transform.position;
-            tempPosition.x = x;
-            transform.position = tempPosition;
+            transform.position = transform.position.WithX(x);
         }
 
         public static void SetPositionY(this Transform transform, float y)
         {
-            var tempPosition = transform.position;
-            tempPosition.y = y;
-            transform.position = tempPosition;
+            transform.position = transform.position.WithY(y);
         }
 
         public static void SetPositionZ(this Transform transform, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.z = z;
-            transform.position = tempPosition;
+            transform.position = transform.position.WithZ(z);
         }
 
         public static void SetPositionXY(this Transform transform, float x, float y)
         {
-            transform.position = new Vector3(x, y, transform.position.z);
+            transform.position = transform.position.WithXY(x, y);
         }
 
         public static void SetPositionXZ(this Transform transform, float x, float z)
         {
-            transform.position = new Vector3(x, transform.position.y, z);
+            transform.position = transform.position.WithXZ(x, z);
         }
 
         public static void SetPositionYZ(this Transform transform, float y, float z)
         {
-            transform.position = new Vector3(transform.position.x, y, z);
+            transform.position = transform.position.WithYZ(y, z);
         }
 
         public static void SetPositionXYZ(this Transform transform, float x, float y, float z)
@@ -49,116 +43,68 @@ namespace SGSTools.Common
         // Add Position
         public static void AddPositionX(this Transform transform, float x)
         {
-            var tempPosition = transform.position;
-            tempPosition.x += x;
-            transform.position = tempPosition;
+            transform.position += new Vector3(x, 0f, 0f);
         }
 
         public static void AddPositionY(this Transform transform, float y)
         {
-            var tempPosition = transform.position;
-            tempPosition.y += y;
-            transform.position = tempPosition;
+            transform.position += new Vector3(0f, y, 0f);
         }
 
         public static void AddPositionZ(this Transform transform, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.z += z;
-            transform.position = tempPosition;
+            transform.position += new Vector3(0f, 0f, z);
         }
 
         public static void AddPositionXY(this Transform transform, float x, float y)
         {
-            var tempPosition = transform.position;
-            tempPosition.x += x;
-            tempPosition.y += y;
-            transform.position = tempPosition;
+            transform.position += new Vector3(x, y, 0f);
         }
 
         public static void AddPositionXZ(this Transform transform, float x, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.x += x;
-            tempPosition.z += z;
-            transform.position = tempPosition;
+            transform.position += new Vector3(x, 0f, z);
         }
 
         public static void AddPositionYZ(this Transform transform, float y, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.y += y;
-            tempPosition.z += z;
-            transform.position = tempPosition;
+            transform.position += new Vector3(0f, y, z);
         }
 
         public static void AddPositionXYZ(this Transform transform, float x, float y, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.x += x;
-            tempPosition.y += y;
-            tempPosition.z += z;
-            transform.position = tempPosition;
+            transform.position += new Vector3(x, y, z);
         }
-
-        // Clamp Position
-        public static void ClampPositionX(this Transform transform, float minX, float maxX)
-        {
-            var tempPosition = transform.position;
-            tempPosition.x = Mathf.Clamp(tempPosition.x, minX, maxX);
-            transform.position = tempPosition;
-        }
-
-        public static void ClampPositionY(this Transform transform, float minY, float maxY)
-        {
-            var tempPosition = transform.position;
-            tempPosition.y = Mathf.Clamp(tempPosition.y, minY, maxY);
-            transform.position = tempPosition;
-        }
-
-        public static void ClampPositionZ(this Transform transform, float minZ, float maxZ)
-        {
-            var tempPosition = transform.position;
-            tempPosition.z = Mathf.Clamp(tempPosition.z, minZ, maxZ);
-            transform.position = tempPosition;
-        }
-        // TODO: Clamp Position: XY, XZ, YZ, XYZ
 
         // Set Local Position
         public static void SetLocalPositionX(this Transform transform, float x)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.x = x;
-            transform.localPosition = tempPosition;
+            transform.localPosition = transform.localPosition.WithX(x);
         }
 
         public static void SetLocalPositionY(this Transform transform, float y)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.y = y;
-            transform.localPosition = tempPosition;
+            transform.localPosition = transform.localPosition.WithY(y);
         }
 
         public static void SetLocalPositionZ(this Transform transform, float z)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.z = z;
-            transform.localPosition = tempPosition;
+            transform.localPosition = transform.localPosition.WithZ(z);
         }
 
         public static void SetLocalPositionXY(this Transform transform, float x, float y)
         {
-            transform.localPosition = new Vector3(x, y, transform.localPosition.z);
+            transform.localPosition = transform.localPosition.WithXY(x, y);
         }
 
         public static void SetLocalPositionXZ(this Transform transform, float x, float z)
         {
-            transform.localPosition = new Vector3(x, transform.localPosition.y, z);
+            transform.localPosition = transform.localPosition.WithXZ(x, z);
         }
 
         public static void SetLocalPositionYZ(this Transform transform, float y, float z)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, y, z);
+            transform.localPosition = transform.localPosition.WithYZ(y, z);
         }
 
         public static void SetLocalPositionXYZ(this Transform transform, float x, float y, float z)
@@ -169,80 +115,38 @@ namespace SGSTools.Common
         // Add Local Position
         public static void AddLocalPositionX(this Transform transform, float x)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.x += x;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(x, 0f, 0f);
         }
 
         public static void AddLocalPositionY(this Transform transform, float y)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.y += y;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(0f, y, 0f);
         }
 
         public static void AddLocalPositionZ(this Transform transform, float z)
         {
-            var tempPosition = transform.position;
-            tempPosition.z += z;
-            transform.position = tempPosition;
+            transform.localPosition += new Vector3(0f, 0f, z);
         }
-
+        
         public static void AddLocalPositionXY(this Transform transform, float x, float y)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.x += x;
-            tempPosition.y += y;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(x, y, 0f);
         }
 
         public static void AddLocalPositionXZ(this Transform transform, float x, float z)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.x += x;
-            tempPosition.z += z;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(x, 0f, z);
         }
 
         public static void AddLocalPositionYZ(this Transform transform, float y, float z)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.y += y;
-            tempPosition.z += z;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(0f, y, z);
         }
 
         public static void AddLocalPositionXYZ(this Transform transform, float x, float y, float z)
         {
-            var tempPosition = transform.localPosition;
-            tempPosition.x += x;
-            tempPosition.y += y;
-            tempPosition.z += z;
-            transform.localPosition = tempPosition;
+            transform.localPosition += new Vector3(x, y, z);
         }
-
-        // Clamp Local Position
-        public static void ClampLocalPositionX(this Transform transform, float minX, float maxX)
-        {
-            var tempPosition = transform.localPosition;
-            tempPosition.x = Mathf.Clamp(tempPosition.x, minX, maxX);
-            transform.localPosition = tempPosition;
-        }
-
-        public static void ClampLocalPositionY(this Transform transform, float minY, float maxY)
-        {
-            var tempPosition = transform.localPosition;
-            tempPosition.y = Mathf.Clamp(tempPosition.y, minY, maxY);
-            transform.localPosition = tempPosition;
-        }
-
-        public static void ClampLocalPositionZ(this Transform transform, float minZ, float maxZ)
-        {
-            var tempPosition = transform.localPosition;
-            tempPosition.z = Mathf.Clamp(tempPosition.z, minZ, maxZ);
-            transform.localPosition = tempPosition;
-        }
-        // TODO: Clamp Local Position: XY, XZ, YZ, XYZ
 
         // Set Rotation
         public static void SetRotationX(this Transform transform, float eulerX)
@@ -298,8 +202,52 @@ namespace SGSTools.Common
             tempEulerAngles.z = eulerZ;
             transform.rotation = Quaternion.Euler(tempEulerAngles);
         }
-        // TODO: Add Rotation
-        // TODO: Clamp Rotation
+        
+        // Add Rotation
+        public static void AddRotationX(this Transform transform, float x)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.x += x;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddRotationY(this Transform transform, float y)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.y += y;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddRotationZ(this Transform transform, float z)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.z += z;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddRotationXY(this Transform transform, float x, float y)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.x += x;
+            tempEulerAngles.y += y;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddRotationXZ(this Transform transform, float x, float z)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.x += x;
+            tempEulerAngles.z += z;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddRotationYZ(this Transform transform, float y, float z)
+        {
+            var tempEulerAngles = transform.rotation.eulerAngles;
+            tempEulerAngles.y += y;
+            tempEulerAngles.z += z;
+            transform.rotation = Quaternion.Euler(tempEulerAngles);
+        }
 
         // Set Local Rotation
         public static void SetLocalRotationX(this Transform transform, float eulerX)
@@ -339,7 +287,7 @@ namespace SGSTools.Common
             transform.localRotation = Quaternion.Euler(tempEulerAngles);
         }
 
-        public static void SetRLocalotationYZ(this Transform transform, float eulerY, float eulerZ)
+        public static void SetLocalRotationYZ(this Transform transform, float eulerY, float eulerZ)
         {
             var tempEulerAngles = transform.localRotation.eulerAngles;
             tempEulerAngles.y = eulerY;
@@ -357,60 +305,80 @@ namespace SGSTools.Common
         }
         
         // Add Local Rotation
+        public static void AddLocalRotationX(this Transform transform, float x)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.x += x;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddLocalRotationY(this Transform transform, float y)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.y += y;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
         public static void AddLocalRotationZ(this Transform transform, float z)
         {
             var tempEulerAngles = transform.localRotation.eulerAngles;
             tempEulerAngles.z += z;
             transform.localRotation = Quaternion.Euler(tempEulerAngles);
         }
-        // TODO All Local Rotation other cases
-
-        // TODO: Clamp Local Rotation
+        
+        public static void AddLocalRotationXY(this Transform transform, float x, float y)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.x += x;
+            tempEulerAngles.y += y;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddLocalRotationXZ(this Transform transform, float x, float z)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.x += x;
+            tempEulerAngles.z += z;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
+        
+        public static void AddLocalRotationYZ(this Transform transform, float y, float z)
+        {
+            var tempEulerAngles = transform.localRotation.eulerAngles;
+            tempEulerAngles.y += y;
+            tempEulerAngles.z += z;
+            transform.localRotation = Quaternion.Euler(tempEulerAngles);
+        }
 
         // Set Local Scale
         public static void SetLocalScaleX(this Transform transform, float x)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x = x;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithX(x);
         }
 
         public static void SetLocalScaleY(this Transform transform, float y)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.y = y;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithY(y);
         }
 
         public static void SetLocalScaleZ(this Transform transform, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.z = z;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithZ(z);
         }
 
         public static void SetLocalScaleXY(this Transform transform, float x, float y)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x = x;
-            tempLocalScale.y = y;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithXY(x, y);
         }
 
         public static void SetLocalScaleXZ(this Transform transform, float x, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x = x;
-            tempLocalScale.z = z;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithXZ(x, z);
         }
 
         public static void SetLocalScaleYZ(this Transform transform, float y, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.y = y;
-            tempLocalScale.z = z;
-            transform.localScale = tempLocalScale;
+            transform.localScale = transform.localScale.WithXY(y, z);
         }
 
         public static void SetLocalScaleXYZ(this Transform transform, float x, float y, float z)
@@ -426,89 +394,48 @@ namespace SGSTools.Common
         // Add Local Scale
         public static void AddLocalScaleX(this Transform transform, float x)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x += x;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(x, 0f, 0f);
         }
 
         public static void AddLocalScaleY(this Transform transform, float y)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.y += y;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(0f, y, 0f);
         }
 
         public static void AddLocalScaleZ(this Transform transform, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.z += z;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(0f, 0f, z);
         }
 
         public static void AddLocalScaleXY(this Transform transform, float x, float y)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x += x;
-            tempLocalScale.y += y;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(x, y, 0f);
         }
 
         public static void AddLocalScaleXZ(this Transform transform, float x, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x += x;
-            tempLocalScale.z += z;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(x, 0f, z);
         }
 
         public static void AddLocalScaleYZ(this Transform transform, float y, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.y += y;
-            tempLocalScale.z += z;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(0f, y, z);
         }
 
         public static void AddLocalScaleXYZ(this Transform transform, float x, float y, float z)
         {
-            var tempLocalScale = transform.localScale;
-            tempLocalScale.x += x;
-            tempLocalScale.y += y;
-            tempLocalScale.z += z;
-            transform.localScale = tempLocalScale;
+            transform.localScale += new Vector3(x, y, z);
         }
-
-        // Clamp Local Scale
-        public static void ClampLocalScaleX(this Transform transform, float minX, float maxX)
-        {
-            var tempScale = transform.localScale;
-            tempScale.x = Mathf.Clamp(tempScale.x, minX, maxX);
-            transform.localScale = tempScale;
-        }
-
-        public static void ClampLocalScaleY(this Transform transform, float minY, float maxY)
-        {
-            var tempScale = transform.localScale;
-            tempScale.y = Mathf.Clamp(tempScale.y, minY, maxY);
-            transform.localScale = tempScale;
-        }
-
-        public static void ClampLocalScaleZ(this Transform transform, float minZ, float maxZ)
-        {
-            var tempScale = transform.localScale;
-            tempScale.z = Mathf.Clamp(tempScale.z, minZ, maxZ);
-            transform.localScale = tempScale;
-        }
-
+        
         // Set Anchored Position
         public static void SetAnchoredPositionX(this RectTransform rectTransform, float x)
         {
-            rectTransform.anchoredPosition = new Vector2(x, rectTransform.anchoredPosition.y);
+            rectTransform.anchoredPosition = rectTransform.anchoredPosition.WithX(x);
         }
 
         public static void SetAnchoredPositionY(this RectTransform rectTransform, float y)
         {
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, y);
+            rectTransform.anchoredPosition = rectTransform.anchoredPosition.WithY(y);
         }
 
         public static void SetAnchoredPositionXY(this RectTransform rectTransform, float x, float y)

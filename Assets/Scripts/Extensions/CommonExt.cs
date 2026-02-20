@@ -6,11 +6,11 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace SGSTools.Common
+namespace SGSTools.Extensions
 { 
     public static class CommonExt
     {
-        // Int
+        // int
         public static bool IsEven(this int value)
         {
             return value % 2 == 0;
@@ -58,7 +58,7 @@ namespace SGSTools.Common
             return new Color(color.r, color.g, color.b, alpha);
         }
 
-        // Int/enum
+        // int/enum
         public static int ToInt<T>(this T value) where T : Enum
         {
             return (int)(object)value;
@@ -69,7 +69,7 @@ namespace SGSTools.Common
             return (T)(object)value;
         }
 
-        // Int/bool
+        // int/bool
         public static bool ToBool(this int i)
         {
             return i > 0 ? true : false;
@@ -116,7 +116,7 @@ namespace SGSTools.Common
             return Screen.currentResolution;
         }
 
-        // String
+        // string
         public static string SubstringFromTo(this string s, int startIndex, int endIndex)
         {
             if (startIndex <= endIndex && !string.IsNullOrEmpty(s) &&
@@ -132,7 +132,7 @@ namespace SGSTools.Common
             return !string.IsNullOrEmpty(s) && s.Length > index;
         }
 
-        // Alpha
+        // alpha
         public static void SetAlpha(this SpriteRenderer sprite, float alpha)
         {
             var color = sprite.color;
@@ -179,7 +179,7 @@ namespace SGSTools.Common
             trailRenderer.endColor = color;
         }
 
-        // Particle Systems
+        // ParticleSystem
         public static void SetStartAlpha(this ParticleSystem particleSystem, float alpha)
         {
             var mainModule = particleSystem.main;
@@ -256,7 +256,7 @@ namespace SGSTools.Common
             return dictionary.ContainsKey(key);
         }
 
-        // List/array, TODO IsEmpty
+        // List/Array
         public static bool IsNullOrEmpty<T>(this T[] array)
         {
             return array == null || array.Length == 0;
@@ -265,6 +265,18 @@ namespace SGSTools.Common
         public static bool IsNullOrEmpty<T>(this List<T> list)
         {
             return list == null || list.Count == 0;
+        }
+
+        public static bool IsEmpty<T>(this List<T> list)
+        {
+            // @TODO null check?
+            return list.Count == 0;
+        }
+        
+        public static bool IsEmpty<T>(this T[] array)
+        {
+            // @TODO null check?
+            return array.Length == 0;
         }
 
         public static bool ContainsIndex<T>(this T[] array, int index)
@@ -358,7 +370,7 @@ namespace SGSTools.Common
         {
             if (array.IsNullOrEmpty())
             {
-                // TODO assert
+                // @TODO assert
                 Debug.LogWarning("Trying to get a wrapped index from an empty or uninitialized array. Returning default value...");
                 return default;
             }
@@ -370,7 +382,7 @@ namespace SGSTools.Common
         {
             if (list.IsNullOrEmpty())
             {
-                // TODO assert
+                // @TODO assert
                 Debug.LogWarning("Trying to get a wrapped index from an empty or uninitialized list. Returning default value...");
                 return default;
             }
@@ -378,8 +390,7 @@ namespace SGSTools.Common
             return wrappedIndex;
         }
 
-        // TODO: Add list/array extensions for sum, average, etc. 
-        // Add support for int, float, Vector2, Vector3 or whatever else makes sense.
+        // @TODO Add list/array extensions for sum, average, etc.
         
         public static void Shuffle<T>(this List<T> list)
         {
@@ -393,7 +404,7 @@ namespace SGSTools.Common
         }
         
         // Weighted lists
-        // TODO does this need to be an extension method?
+        // @TODO does this need to be an extension method?
         public static (int Index, T Item) GetRandomWeightedElement<T>(this List<(float Weight, T Item)> list)
         {
             var totalWeight = 0f;

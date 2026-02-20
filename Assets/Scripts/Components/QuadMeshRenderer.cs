@@ -1,5 +1,5 @@
 using SGSTools.Util;
-using SGSTools.Common;
+using SGSTools.Extensions;
 using UnityEngine;
 using UnityEngine.Rendering;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SGSTools.Common
+namespace SGSTools.Util
 {
     public static class CameraUtils
     {

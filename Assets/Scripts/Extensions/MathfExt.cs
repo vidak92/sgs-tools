@@ -1,12 +1,11 @@
 using UnityEngine;
 
-namespace SGSTools.Common
+namespace SGSTools.Extensions
 {
     public static class MathfExt
     {
         public const float TAU = 6.283185307179586f;
-        
-        public static readonly float EquilateralTriangleHeight = Mathf.Sqrt(3f) / 2f;
+        public static readonly float EQUILATERAL_TRIANGLE_HEIGHT = Mathf.Sqrt(3f) / 2f;
         
         public static bool AreLinesIntersecting(Vector2 l1p1, Vector2 l1p2, Vector2 l2p1, Vector2 l2p2)
         {
@@ -76,7 +75,7 @@ namespace SGSTools.Common
         }
 
         /// <param name="angle">in radians</param>
-        public static Vector3 AngleToVectorXY(float angle, float radius) // TODO rename to AngleToVectorXY
+        public static Vector3 AngleToVectorXY(float angle, float radius)
         {
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
@@ -88,7 +87,7 @@ namespace SGSTools.Common
         {
             if (maxExclusive < 0)
             {
-                // TODO assert?
+                // @TODO assert?
             }
             
             if (value >= maxExclusive)
@@ -97,7 +96,7 @@ namespace SGSTools.Common
             }
             else
             {
-                // TODO find a way to do this without a loop
+                // @TODO find a way to do this without a loop
                 while (value < 0)
                 {
                     value += maxExclusive;    

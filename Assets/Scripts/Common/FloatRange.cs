@@ -4,21 +4,21 @@ using SGSTools.Util;
 using UnityEditor;
 #endif
 
-namespace SGSTools.Data
+namespace SGSTools.Common
 {
     [System.Serializable]
-    public class MinMaxFloat
+    public class FloatRange
     {
         public float Min;
         public float Max;
 
-        public MinMaxFloat()
+        public FloatRange()
         {
             Min = 0f;
             Max = 0f;
         }
         
-        public MinMaxFloat(float min, float max)
+        public FloatRange(float min, float max)
         {
             Min = min;
             Max = max;
@@ -49,11 +49,11 @@ namespace SGSTools.Data
     }
     
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(MinMaxFloat))]
+    [CustomPropertyDrawer(typeof(FloatRange))]
     public class MinMaxFloatDrawer : FieldPairDrawer
     {
-        protected override string Field1Name { get; } = nameof(MinMaxFloat.Min);
-        protected override string Field2Name { get; } = nameof(MinMaxFloat.Max);
+        protected override string Field1Name { get; } = nameof(FloatRange.Min);
+        protected override string Field2Name { get; } = nameof(FloatRange.Max);
         
         protected override float FieldLabelWidth { get; } = 45f;
         protected override string Field1Label { get; } = "Min";

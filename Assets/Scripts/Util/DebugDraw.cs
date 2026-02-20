@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SGSTools.Util;
 using SGSTools.Components;
 using UnityEngine;
 
@@ -77,7 +76,7 @@ namespace SGSTools.Util
         private const string _quadShapeShaderName = "SGS/QuadShape";
         private Mesh _quadMesh;
         private Material _quadShapeMaterial;
-        private ObjectPool<QuadShape> _quadShapePool;
+        private ObjectPool<QuadMeshShape> _quadShapePool;
         private const int _initialCapacity = 100;
         
         private Transform _activeObjectsParent;
@@ -247,7 +246,7 @@ namespace SGSTools.Util
             quadShapeObject.SetActive(false);
             quadShapeObject.transform.parent = _instance.transform;
             
-            var quadShape = quadShapeObject.AddComponent<QuadShape>();
+            var quadShape = quadShapeObject.AddComponent<QuadMeshShape>();
             var meshFilter = quadShapeObject.AddComponent<MeshFilter>();
             meshFilter.sharedMesh = _quadMesh;
             quadShape.MeshFilter = meshFilter;
@@ -258,7 +257,7 @@ namespace SGSTools.Util
             meshRenderer.sortingOrder = Settings.StartingSortOrder;
             quadShape.MeshRenderer = meshRenderer;
             
-            _quadShapePool = ObjectPool<QuadShape>.CreateWithGameObject(quadShape, _initialCapacity, "DebugDraw_QuadShapePool");
+            _quadShapePool = ObjectPool<QuadMeshShape>.CreateWithGameObject(quadShape, _initialCapacity, "DebugDraw_QuadShapePool");
 
             var activeObjectsParentObject = new GameObject("ActiveObjects");
             activeObjectsParentObject.transform.parent = _instance.transform;

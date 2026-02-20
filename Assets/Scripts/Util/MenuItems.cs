@@ -28,7 +28,7 @@ namespace SGSTools.Util
         [MenuItem("SGS Tools/Take Screenshot")]
         public static void TakeScreenshot()
         {
-            // TODO extract method to EditorUtils
+            // @TODO extract method to EditorUtils
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
             var directoryPath = $"{Application.persistentDataPath}/screenshots";
             if (!System.IO.Directory.Exists(directoryPath))

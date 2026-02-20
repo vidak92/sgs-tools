@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SGSTools.Components
 {
-    // TODO: Extend for higher frame-rates(100+ FPS).
+    // @TODO Extend for higher frame-rates(100+ FPS).
     public class FPSCounter : MonoBehaviour
     {
         private readonly string[] _numbers = new string[]

@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using SGSTools.Common;
+using SGSTools.Extensions;
 using UnityEngine;
 
 namespace SGSTools.Util
@@ -40,7 +40,7 @@ namespace SGSTools.Util
             }
 
             var taggedString = _stringBuilder.ToString();
-            _stringBuilder.Clear(); // NOTE not really necessary to clear here
+            _stringBuilder.Clear(); // @NOTE not really necessary to clear here
             return taggedString;
         }
 

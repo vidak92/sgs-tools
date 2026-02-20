@@ -49,14 +49,14 @@ namespace SGSTools.Util
         {
             if (AssetDatabase.AssetPathExists(path))
             {
-                // TODO log
+                // @TODO log
                 return true;
             }
 
             var assetPathIndex = path.IndexOf("Assets/", StringComparison.InvariantCulture);
             if (assetPathIndex < 0)
             {
-                // TODO log error
+                // @TODO log error
                 return false;
             }
             var startPathIndex =  + assetPathIndex + "Assets/".Length;
@@ -71,7 +71,7 @@ namespace SGSTools.Util
                     var guid = AssetDatabase.CreateFolder(folderPath, subfolder);
                     if (string.IsNullOrEmpty(guid))
                     {
-                        // TODO log error
+                        // @TODO log error
                         return false;
                     }
                 }
@@ -87,7 +87,7 @@ namespace SGSTools.Util
             var assetPath = $"{folderPath}/{assetName}";
             if (AssetDatabase.AssetPathExists(assetPath))
             {
-                // TODO add overwrite param
+                // @TODO add overwrite param
                 Debug.LogWarning($"SGSTools: Asset already exists at {assetPath}");
                 return true;
             }
@@ -100,8 +100,8 @@ namespace SGSTools.Util
             }
             
             AssetDatabase.CreateAsset(asset, assetPath);
-            // TODO check if asset was successfully created?
-            // TODO add save assets & refresh param?
+            // @TODO check if asset was successfully created?
+            // @TODO add save assets & refresh param?
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             return true;

@@ -1,6 +1,6 @@
 ﻿using System;
 using SGSTools.Common;
-using SGSTools.Data;
+using SGSTools.Extensions;
 using UnityEngine;
 
 namespace SGSTools.Components
@@ -8,8 +8,8 @@ namespace SGSTools.Components
     [Serializable]
     public class SoundEffect
     {
-        public MinMaxFloat Volume = new MinMaxFloat(0f, 1f);
-        public MinMaxFloat Pitch = new MinMaxFloat(1f, 1f);
+        public FloatRange Volume = new FloatRange(0f, 1f);
+        public FloatRange Pitch = new FloatRange(1f, 1f);
         public AudioClip[] Clips;
 
         private int _lastPlayedClipIndex;
