@@ -10,14 +10,9 @@ namespace SGSTools.Util
 #endif
     public static class ServiceLocator
     {
-        private static readonly Dictionary<Type, object> _services = new();
+        private static readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
-        static ServiceLocator()
-        {
-            Clear();
-        }
-
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Clear()
         {
             _services.Clear();

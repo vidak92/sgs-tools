@@ -24,7 +24,7 @@ list.Shuffle(); // rearrange all elements
 ```
 
 ### DebugDraw
-- A utility for drawing basic UI shapes, similar to `Gizmos` and `Handles`, that works in the Game view and built/deployed games
+- A utility for drawing basic shapes, similar to `Gizmos` and `Handles`, that works in the Game view and built/deployed games
 - Uses an immediate-mode style API, all drawn shapes are cleared after each `Update()`
 - Supports drawing 2D shapes in world space: Line, Rect and Circle
 ```
@@ -71,14 +71,14 @@ private void Update()
 
 Example usage:
 ```
-public ProjectilePrefab ProjectilePrefab;
+public Projectile ProjectilePrefab;
 public Transform ProjectileParent;
 
 private ObjectPool<Projectile> _projectilePool;
 
 private void Awake()
 {
-    // init pool with an existing parent object for pooled objects
+    // init pool with an existing parent object for inactive pooled objects
     _projectilePool = new ObjectPool<Projectile>(ProjectilePrefab, 100, ProjectileParent);
     
     // alternatively, init pool and create a new parent object in the scene with a given name
@@ -102,7 +102,7 @@ private void DespawnProjectile(Projectile projectile)
 
 ### Shaders
 - This library contains some shaders for basic post-processing effects like Blur, Vignette and Fisheye
-- Also contains some helper methods for creating some basic 2D SDFs like Circle and Capsule
+- Also contains some helper methods for creating basic 2D SDFs like Circle and Capsule
 
 ```
 float4 frag (v2f i) : SV_Target
@@ -113,9 +113,9 @@ float4 frag (v2f i) : SV_Target
     
     // ...
     
-    float4 circleColor = ...; 
+    float4 color = ...; 
     float circle = CircleFill(i.uv, center, radius); // uses SDF_Circle behind the scenes
-    float circleColor = circle * circleColor; 
+    float circleColor = circle * color; 
     
     // ...
 }
@@ -125,8 +125,8 @@ float4 frag (v2f i) : SV_Target
 
 #### CoroutineUtils
 - Helper methods for easily calling coroutines
-- Uses a single `GameObject` to start the coroutines behind the scenes
-- Can be called from anywhere within the `Update` loop
+- Uses a single `GameObject` to start/stop the coroutines behind the scenes
+- Can be called from anywhere during a scene's lifecycle
 ```
 CoroutineUtils.CallAfterOneFrame(() => { ... });
 CoroutineUtils.CallAfterXFrames(5, () => { ... });
@@ -140,16 +140,20 @@ CoroutineUtils.CallAfterXSeconds(1f, () => { ... });
 var cameraShaker = Camera.main.GetComponent<ObjectShaker>();
 cameraShaker.StartShake(intensity: 0.5f); // shake camera with intensity in [0-1] range
 // ...
-cameraShaker.StopShake();  
+cameraShaker.StopShake(); // stop shake explicitly, otherwise it stops automatically when done 
 ```
 
 #### FloatRange and IntRange
 - Custom data types for easily working with number ranges
-- Exposed in the Inspector 
+- Defined by `Min` and `Max` values, exposed in the Inspector 
 ```
 // Example for a sound effect
 
+// ...
+
 public FloatRange VolumeRange; // contains Min and Max fields
+
+// ...
 
 public PlaySoundWithRandomVolume()
 {

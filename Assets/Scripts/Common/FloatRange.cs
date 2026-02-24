@@ -32,12 +32,7 @@ namespace SGSTools.Common
         public float GetValueAt(float t)
         {
             var value = Mathf.Lerp(Min, Max, t);
-            return GetClampedValue(value);
-        }
-
-        public float GetClampedValue(float value)
-        {
-            return Mathf.Clamp(value, Min, Max);
+            return value;
         }
         
         public float GetInverseValue(float value)

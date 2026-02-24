@@ -12,7 +12,7 @@ namespace SGSTools.Common
 
         public bool IsDone => Time <= 0f;
 
-        public void Init(float duration) // @TODO reset param?
+        public void Init(float duration)
         {
             Duration = duration;
             Time = 0f;
