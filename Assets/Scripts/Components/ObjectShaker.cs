@@ -1,4 +1,5 @@
-﻿using SGSTools.Util;
+﻿using SGSTools.Common;
+using SGSTools.Util;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -30,24 +31,20 @@ namespace SGSTools.Components
     public class ObjectShaker : MonoBehaviour
     {
         [Space]
-        [Tooltip("If checked, shakes Camera.main and TargetObject is ignored.")]
+        [Tooltip("If checked, shakes Camera.main and TargetObject is ignored")]
         public bool TargetIsMainCamera;
         public GameObject TargetObject;
 
         [Space]
         [Range(0f, 1f)]
-        [Tooltip("If 0 - uses MinXXX params.\nIf 1 - uses MaxXXX params.\nOtherwise, interpolates between MinXXX/MaxXXX.")]
+        [Tooltip("Interpolate values from XXXRange fields")]
         public float ShakeIntensity;
         
         [Space]
-        public float MinDuration;
-        public float MinSpeed;
-        public float MinDistance;
-
-        [Space]
-        public float MaxDuration;
-        public float MaxSpeed;
-        public float MaxDistance;
+        [Tooltip("Use (0, 0) for infinite duration")]
+        public FloatRange DurationRange;
+        public FloatRange SpeedRange;
+        public FloatRange DistanceRange;
 
         private float _shakeTimer;
         private bool _shake;
@@ -60,6 +57,8 @@ namespace SGSTools.Components
         private float _shakeSpeed;
         private float _shakeDuration;
         private float _shakeDistance;
+
+        public bool IsShaking => _shake;
 
         private Transform TargetTransform => TargetIsMainCamera ? CameraUtils.MainCamera.transform : TargetObject.transform;
 
@@ -85,7 +84,7 @@ namespace SGSTools.Components
                     // Move to target.
                     _t += Time.deltaTime * _shakeSpeed;
                     targetTransform.position = Vector3.Lerp(_initialPosition, _targetPosition, _t);
-                    _targetReached = _t > 0.99f;
+                    _targetReached = _t > 0.99f; // TODO epsilon variable
 
                     if (_returnToDefaultPosition && _targetReached)
                     {
@@ -96,10 +95,10 @@ namespace SGSTools.Components
                     }
                 }
 
-                if (!_returnToDefaultPosition)
+                if (!_returnToDefaultPosition && _shakeDuration > 0f)
                 {
                     _shakeTimer += Time.deltaTime;
-                    if (_shakeTimer >= _shakeDuration && _shakeDuration > 0f && _targetReached)
+                    if (_shakeTimer >= _shakeDuration && _targetReached)
                     {
                         _returnToDefaultPosition = true;
                         _initialPosition = targetTransform.position;
@@ -125,9 +124,9 @@ namespace SGSTools.Components
             _shake = true;
             _targetReached = true;
             _returnToDefaultPosition = false;
-            _shakeSpeed = Mathf.Lerp(MinSpeed, MaxSpeed, intensity);
-            _shakeDuration = Mathf.Lerp(MinDuration, MaxDuration, intensity);
-            _shakeDistance = Mathf.Lerp(MinDistance, MaxDistance, intensity);
+            _shakeSpeed = SpeedRange.GetValueAt(intensity);
+            _shakeDuration = DurationRange.GetValueAt(intensity);
+            _shakeDistance = DistanceRange.GetValueAt(intensity);
             _defaultPosition = TargetTransform.position;
         }
 
