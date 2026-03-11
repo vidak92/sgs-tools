@@ -130,5 +130,64 @@ namespace SGSTools.Util
         {
             quadMesh.SetUVs(channel, new List<Vector4> { uv, uv, uv, uv });
         }
+        
+        public static Mesh GenerateTessellatedQuadMesh(int rows, int cols)
+        {
+            var mesh = new Mesh();
+
+            int vertRows = rows + 1;
+            int vertCols = cols + 1;
+            int vertCount = vertRows * vertCols;
+            
+            Vector3[] vertices = new Vector3[vertCount];
+            Vector2[] uvs = new Vector2[vertCount];
+            int[] triangles = new int[rows * cols * 6];
+            Vector3[] normals = new Vector3[vertCount];
+            Vector4[] tangents = new Vector4[vertCount];
+
+            // vertices
+            for (int v = 0; v < vertCount; v++)
+            {
+                int c = v % vertCols;
+                int r = v / vertCols;
+                
+                float x = c / (float)cols - 0.5f;
+                float y = r / (float)rows - 0.5f;
+
+                // var vert = ;
+                vertices[v] = new Vector3(x, y, 0f);
+                uvs[v] = new Vector2(x, y);
+                normals[v] = new Vector3(0f, 0f, -1f);
+                tangents[v] = new Vector4(1f, 0f, 0f, -1f);
+            }
+
+            // triangles
+            int t = 0;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    int i = r * vertCols + c;
+                
+                    triangles[t++] = i;
+                    triangles[t++] = i + vertCols;
+                    triangles[t++] = i + 1;
+                    
+                    triangles[t++] = i + 1;
+                    triangles[t++] = i + vertCols;
+                    triangles[t++] = i + vertCols + 1;
+                }
+            }
+            
+            mesh.vertices = vertices;
+            mesh.uv = uvs;
+            mesh.triangles = triangles;
+            mesh.normals = normals;
+            mesh.tangents = tangents;
+            
+            mesh.RecalculateBounds();
+            
+            return mesh;
+        }
     }
 }

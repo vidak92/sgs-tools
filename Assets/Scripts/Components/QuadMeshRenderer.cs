@@ -1,9 +1,8 @@
-using SGSTools.Util;
 using SGSTools.Extensions;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace CyberPuck
+namespace SGSTools.Util
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]

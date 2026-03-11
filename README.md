@@ -102,7 +102,8 @@ private void DespawnProjectile(Projectile projectile)
 
 ### Shaders
 - This library contains some shaders for basic post-processing effects like Blur, Vignette and Fisheye
-- Also contains some helper methods for creating basic 2D SDFs like Circle and Capsule
+- Also contains some helper methods for creating basic 2D SDFs like Circle, Rounded Rect and Capsule
+- Compatible with the built-in renderer (ShaderLab)
 
 ```
 float4 frag (v2f i) : SV_Target
