@@ -41,6 +41,12 @@ namespace SGSTools.Common
             t = Mathf.Clamp01(t);
             return t;
         }
+        public bool ContainsValue(float value, bool minInclusive, bool maxInclusive)
+        {
+            var minCheck = minInclusive ? value >= Min : value > Min;
+            var maxCheck = maxInclusive ? value <= Max : value < Max;
+            return minCheck && maxCheck;
+        }
     }
     
 #if UNITY_EDITOR
